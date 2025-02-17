@@ -1,4 +1,4 @@
-# GitHub Copilot
+# EXPLAINATION OF CURRENT CODE
 
 ## Project Overview
 This project is designed for a VEX robotics competition, utilizing Python for controlling the robot's various functions. The code is structured to handle autonomous and driver control modes, with PID control for precise movements.
