@@ -1,88 +1,80 @@
-FINAL_169B_24-25 Repository
+# FINAL_169B_24-25 Repository
 
 This repository serves as the central hub for our robot code, autonomous strategies, and team documentation as we design, build, and program our robot for the upcoming competitions. It is organized to ensure that all team members can collaborate effectively and have access to the necessary tools to contribute to the project.
 
-This is a GitHub Codespace
+---
 
-Our development environment is hosted on GitHub Codespaces, which ensures that all extensions, console permissions, and formatting are preconfigured and synchronized. By using GitHub Codespaces, we create a consistent and uniform environment for every team member, reducing setup time and avoiding compatibility issues.
+## This is a GitHub Codespace
 
-Key Features of the Codespace:
+Our development environment is hosted on GitHub Codespaces, which ensures that all extensions, console permissions, and formatting are preconfigured and synchronized. By using GitHub Codespaces, we create a **consistent and uniform environment** for every team member, reducing setup time and avoiding compatibility issues.
 
-Cloud-based, no need for local setup
-Shared development environment
-All tools and extensions preconfigured
-Access to the repository and all team resources
-Requirements for Branching or Editing This Workspace Locally:
-If you prefer to edit this workspace on your local machine, make sure to follow these guidelines and install the necessary extensions:
+### Key Features of the Codespace
+- **Cloud-based:** No need for a local setup.
+- **Shared development environment:** All team members access the same tools and configurations.
+- **Preconfigured:** All necessary extensions, settings, and console permissions are in place.
+- **Always updated:** Automatic updates ensure consistency across the team.
 
-Extensions to Install:
+---
 
-VEXCode VSCODE Extensions – Required to interface with the VEX robotics platform.
-Python – For running and debugging Python scripts.
-Python Debugger – To debug Python code.
-Pylance – Enhances the Python development experience with linting, IntelliSense, and type checking.
-Symbolizer for VEX V5 – To ensure the correct symbolization and debugging of VEX V5 specific code.
-Console Permissions (For Self-Made Compiler):
+## Requirements for Branching or Editing This Workspace Locally
 
+If you prefer to edit this workspace on your **local machine**, follow these guidelines and install the necessary extensions.
 
-To ensure that your custom scripts and files are executable from the terminal, follow these steps:
+### Extensions to Install
+1. **VEXCode VSCODE Extensions** – Required to interface with the VEX robotics platform.
+2. **Python** – For running and debugging Python scripts.
+3. **Python Debugger** – To debug Python code.
+4. **Pylance** – Enhances the Python development experience with linting, IntelliSense, and type checking.
+5. **Symbolizer for VEX V5** – Ensures correct symbolization and debugging of VEX V5 specific code.
 
-1. Open the terminal in VS Code.
-2. Navigate to the directory containing the script by running: cd /workspaces/FINAL_169B_24-25/src/
-3. Run the following command to give the script execution permissions: chmod +x bundle.sh
+### Console Permissions (For Self-Made Compiler)
+To ensure your custom scripts and files are executable from the terminal:
 
-   
-Use Notes:
+1. Open the **terminal** in VS Code.
+2. Navigate to the directory containing the script:`cd /workspaces/FINAL_169B_24-25/src/`
+3. Run the following command to grant execution permissions:`chmod +x bundle.sh`
 
-1. Uploading through the Brain (More Reliable):
+### Use Notes:
+#### Uploading Through the Brain (More Reliable)
+It’s recommended to upload the compiled code to the VEX Brain via the VEXCode interface, as this method has proven to be more reliable.
 
-It’s recommended to upload the compiled code to the VEX Brain through the VEXCode interface, as this is a more reliable method for deployment.
+---
 
-3. Ignoring Problems Except for main.py:
+### Ignoring Problems Except for `main.py`
+For now, ignore errors in files other than `main.py` since other files are not yet compiled and do not import VEX libraries.
 
-For now, you can ignore errors in any files other than main.py. Other files are not yet compiled and do not import the VEX libraries.
+---
 
-5. Python VM Updates:
+### Python VM Updates
+Regular updates are necessary for Python VM environments to ensure compatibility with the latest VEX Robotics firmware and tools. Please ensure you are keeping these updated.
 
-Regular updates are necessary for Python VM environments to ensure compatibility with the latest VEX Robotics firmware and Python tools. Please stay on top of these updates.
+---
 
+### How to Compile the Code
+Follow these steps in VS Code to compile the code for deployment:
 
-How to Compile the Code:
+1. **Open the Command Palette:**
+   - Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac).
+   - Type `>Tasks: Run Task` in the Command Palette.
+2. **Run the "Bundle Python Files" Task:**
+   - Select the **"Bundle Python Files"** task from the list.
+   - This task compiles the Python code for deployment to the robot (this process takes about 1-2 seconds).
+3. **Additional Notes:**
+   - The `bundle.sh` script bundles the code files together, preparing them for upload.
+   - Use this task each time you update or modify the code for the robot.
 
-To compile the code for deployment, follow these steps in VS Code:
+---
 
-1. Open the Command Palette:Press Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (Mac).
+### Future Work and Collaboration
+- **As we progress through the competition season,** this repository will evolve with new autonomous strategies, code improvements, and bug fixes.
+- **Branching:** Please branch off from the `main` branch when starting new features or fixes.
+- **Pull Requests:** All changes should be submitted as pull requests for review to ensure stability and readiness for deployment.
+- **Documentation:** Update this README and our documentation as new procedures or tools are added.
 
-2. In the palette, type >Tasks: Run Task.
+---
 
-3. Run the "Bundle Python Files" Task:
-
-4. Select the "Bundle Python Files" task from the list.
-
-This will compile the Python code for deployment to the robot (takes 1-2 seconds).
-
-
-Additional Notes:
-
-If the bundle.sh script runs without issues, it bundles the code files together and prepares them for upload to the robot.
-
-You can use this task every time you update or modify the code for the robot.
-
-
-Future Work and Collaboration:
-
-As we work through the competition season, the repository will continue to evolve with more autonomous strategies, code improvements, and bug fixes.
-
-Please branch from the main branch when starting a new feature or fixing a bug.
-
-Pull requests will be reviewed and merged to ensure that the code is stable and ready for deployment.
-
-
-Repository Structure:
-
-Here's an overview of the main files and directories you will be working with:
-
-src/: Contains the source code for the robot.
-docs/: Documentation on the robot design, competition strategies, and code usage.
-tests/: (Optional) Unit tests and testing framework for the code.
-bundle.sh: Script to bundle and prepare code for uploading to the robot.
+### Repository Structure
+- **src/**: Contains the source code for the robot.
+- **docs/**: Documentation on robot design, competition strategies, and code usage.
+- **tests/**: (Optional) Unit tests and testing frameworks.
+- **bundle.sh**: A script to bundle and prepare the code for uploading to the robot.
