@@ -910,7 +910,7 @@ def ondriver_drivercontrol_1():
         LeftMotors.set_velocity(left_output, PERCENT)
         Left_Front.set_velocity(left_output, PERCENT)
         RightMotors.set_velocity(right_output, PERCENT)
-        Right_front.set_velocity(right_output,
+        Right_front.set_velocity(right_output, PERCENT)
 
 
 def ondriver_drivercontrol_2():
