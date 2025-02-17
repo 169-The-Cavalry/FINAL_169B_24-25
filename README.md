@@ -1,6 +1,6 @@
 # FINAL_169B_24-25 Repository
 
-This repository serves as the central hub for our robot code, autonomous strategies, and team documentation as we design, build, and program our robot for the upcoming competitions. It is organized to ensure that all team members can collaborate effectively and have access to the necessary tools to contribute to the project.
+This repository serves as the 169B hub for our robot code and team documentation. It is organized to ensure that all team members can collaborate effectively and have access to the necessary tools to contribute to this project.
 
 ---
 
