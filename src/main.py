@@ -961,32 +961,7 @@ def ondriver_drivercontrol_0():
             wait(5, MSEC)
         
 
-
-
-def draw_speedometer():
-    brain.screen.clear_screen()
-
-    # Draw speedometer outline
-    brain.screen.draw_circle(160, 120, 50)  # Outer circle
-    brain.screen.print(140, 170, "Speed")
-
-    # Get motor speed (0-100%)
-    speed = RightMotors.velocity(PERCENT)
-    
-    # Convert speed to angle (-90° to 90°)
-    angle = -90 + (speed * 1.8)
-
-    # Calculate needle position
-    needle_x = 160 + 40 * math.cos(angle)
-    needle_y = 120 + 40 * math.sin(angle)
-
-    # Draw speedometer needle
-    brain.screen.draw_line(160, 120, needle_x, needle_y)
-
-    # Render updated screen
-    brain.screen.render()
-
-
+pass
 
 '''def when_started2():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
