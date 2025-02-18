@@ -14,6 +14,7 @@ def onauton_autonomous_0():
 
 
 def RED_LEFT_RING():
+    color_sensing_BLUE_thread = Thread(BLUE_EJECT)
     return
 
 
