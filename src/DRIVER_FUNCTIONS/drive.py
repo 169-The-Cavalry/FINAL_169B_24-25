@@ -52,6 +52,22 @@ def ondriver_drivercontrol_1():
 
 
 def ondriver_drivercontrol_2():
+    global DOon  # Assuming DOon keeps track of clamp state
+    previous_button_state = False  # Track previous button press
+
+    while True:
+        current_button_state = controller_1.buttonB.pressing()
+
+        # Detect the moment the button is first pressed
+        if current_button_state and not previous_button_state:
+            DOon = not DOon  # Toggle state
+            digital_out_b.set(DOon)  # Actuate clamp
+            wait(0.1, SECONDS)  # Debounce delay
+
+        previous_button_state = current_button_state  # Update state tracking
+        wait(5, MSEC)  # Prevent CPU overuse
+
+'''def ondriver_drivercontrol_2():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
     # CONTROLLER CLAMP CONTROL
     while True:
@@ -65,7 +81,7 @@ def ondriver_drivercontrol_2():
                 DOon = True
                 wait(0.1, SECONDS)
             wait(0.2, SECONDS)
-        wait(5, MSEC)
+        wait(5, MSEC)'''
 
 def ondriver_drivercontrol_3():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision

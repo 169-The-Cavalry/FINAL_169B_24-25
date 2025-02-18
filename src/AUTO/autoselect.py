@@ -57,7 +57,7 @@ def onevent_controller_1buttonL2_pressed_0():
     controller_1.rumble("-..")  # Short rumble for previous mode
     smooth_scroll_effect()  # Apply smooth scrolling effect
 
-def when_started5():
+def when_started6():
     """Initialize the auto selector with a visually clean display."""
     controller_1.screen.clear_screen()
     controller_1.screen.set_cursor(1, 1)
