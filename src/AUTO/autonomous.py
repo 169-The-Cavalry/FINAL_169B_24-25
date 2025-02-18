@@ -10,23 +10,104 @@ def onauton_autonomous_0():
     stop_initialize.broadcast()
     # AUTO SELECT
     RED_LEFT_RING()
+    
 
 
 
 def RED_LEFT_RING():
     color_sensing_BLUE_thread = Thread(BLUE_EJECT)
-    return
+    pid_drive(7, 80)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(350, DEGREES)
+    Lady_Brown.spin_to_position(0, DEGREES)
+    wait(0.1, SECONDS)
+    pid_turn(1, 100)
+    wait(0.1, SECONDS)
+    pid_drive(-30, 80)
+    wait(0.1, SECONDS)
+    digital_out_b.set(True)
+    wait(0.1, SECONDS)
+    pid_turn(110, 100)
+    intake.spin(FORWARD)
+    pid_drive(30, 80)
+    wait(1, SECONDS)
+    pid_drive(-10, 80)
+    pid_turn(10, 100)
+    pid_drive(20, 80)
+    wait(1, SECONDS)
+    pid_drive(-10, 80)
+    wait(0.1, SECONDS)
+    pid_turn(100, 100)
+    wait(0.1, SECONDS)
+    pid_drive(15, 80)
+    wait(1, SECONDS)
+    intake.stop()
+    wait(0.1, SECONDS)
+    pid_turn(160, 100)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(200, DEGREES)
+    wait(0.1, SECONDS)
+    pid_drive(30, 80)
+
+
+def RED_RIGHT_GOAL_RUSH():
+    color_sensing_BLUE_thread = Thread(BLUE_EJECT)
+    pid_drive(70, 80)
+    wait(0.1, SECONDS)
+    pid_turn(20, 100)
+    wait(0.1, SECONDS)
+    pid_drive(10, 80)
+    wait(0.1, SECONDS)
+    digital_out_g.set(True)
+    wait(0.1, SECONDS)
+    pid_turn(-20, 100)
+    wait(0.1, SECONDS)
+    pid_drive(-30, 80)
+    wait(0.1, SECONDS)
+    digital_out_g.set(True)
+    wait(0.1, SECONDS)
+    pid_turn(180, 100)
+    wait(0.1, SECONDS)
+    pid_drive(-15, 80)
+    wait(0.1, SECONDS)
+    digital_out_g.set(True)
+    wait(0.1, SECONDS)
+    intake.spin(FORWARD)
+    wait(1, SECONDS)
+    digital_out_g.set(False)
+    wait(0.1, SECONDS)
+    pid_drive(20, 80)
+    wait(0.1, SECONDS)
+    pid_turn(60, 100)
+    wait(0.1, SECONDS)
+    pid_drive(-40, 80)
+    wait(0.1, SECONDS)
+    digital_out_g.set(True)
+    wait(0.1, SECONDS)
+    pid_turn(40, 100)
+    wait(0.1, SECONDS)
+    pid_drive(40, 80)
+    wait(0.1, SECONDS)
+    pid_turn(180, 100)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(200, DEGREES)
+    wait(0.1, SECONDS)
+    pid_drive(20, 80)
+    
 
 
     '''pid_drive(-50, 80)
     digital_out_b.set(True)
     intake.spin(FORWARD)
     pid_turn(180, 100)
-    wait(0.5, SECONDS)'''
+    wait(0.5, SECONDS)
+    Lady_Brown.spin_to_position(200, DEGREES)'''
     
-   
-   
+def BLUE_LEFT_RING():
+    color_sensing_RED_thread = Thread(RED_EJECT)
 
+def BLUE_RIGHT_GOAL_RUSH():
+    color_sensing_RED_thread = Thread(RED_EJECT)
 
 
 
