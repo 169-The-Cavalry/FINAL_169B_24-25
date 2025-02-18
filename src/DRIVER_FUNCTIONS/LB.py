@@ -1,6 +1,6 @@
 
 
-'''def ondriver_drivercontrol_4():
+def ondriver_drivercontrol_6():
     global rotation_15, Lady_Brown, controller_1
 
     # LADY BROWN INITIALIZATION
@@ -53,7 +53,7 @@
         wait(5, MSEC)  # Reduce CPU usage'''
 
 
-def ondriver_drivercontrol_4():
+'''def ondriver_drivercontrol_4():
     global rotation_15, Lady_Brown, controller_1
 
     # PID Constants (Tune these values)
@@ -125,6 +125,6 @@ def ondriver_drivercontrol_4():
                 print("⚠️ SAFEGUARD TRIGGERED: Movement timeout!")
                 Lady_Brown.stop(COAST)
 
-        wait(5, MSEC)  # Reduce CPU usage
+        wait(5, MSEC)  # Reduce CPU usage'''
 
 

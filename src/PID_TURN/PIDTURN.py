@@ -113,6 +113,7 @@ def vexcode_driver_function():
     driver_control_task_3 = Thread( ondriver_drivercontrol_3 )
     driver_control_task_4 = Thread( ondriver_drivercontrol_4 )
     driver_control_task_5 = Thread( ondriver_drivercontrol_5 )
+    driver_control_task_6 = Thread( ondriver_drivercontrol_6 )
 
     # wait for the driver control period to end
     while( competition.is_driver_control() and competition.is_enabled() ):
@@ -125,14 +126,15 @@ def vexcode_driver_function():
     '''driver_control_task_3.stop()'''
     driver_control_task_4.stop()
     driver_control_task_5.stop()
+    driver_control_task_6.stop()
 
 
 # register the competition functions
 competition = Competition( vexcode_driver_function, vexcode_auton_function )
 
 # system event handlers
-'''controller_1.axis2.changed(onevent_controller_1axis2Changed_0)
-controller_1.axis3.changed(onevent_controller_1axis3Changed_0)'''
+controller_1.axis2.changed(onevent_controller_1axis2Changed_0)
+controller_1.axis3.changed(onevent_controller_1axis3Changed_0)
 stop_initialize(onevent_stop_initialize_0)
 controller_1.buttonL1.pressed(onevent_controller_1buttonL1_pressed_0)
 controller_1.buttonL2.pressed(onevent_controller_1buttonL2_pressed_0)
