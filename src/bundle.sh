@@ -55,7 +55,7 @@ for file in "${files[@]}"; do
 done
 
 # Increment compile count
-compile_count_file="/workspaces/FINAL_169B_24-25/src/compile_count.txt"
+compile_count_file="/Users/jaybot/Downloads/FINAL_169B_24-25/src/compile_count.txt"
 if [ ! -f "$compile_count_file" ]; then
     echo 0 > "$compile_count_file"
 fi

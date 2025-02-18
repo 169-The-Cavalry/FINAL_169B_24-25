@@ -4,7 +4,7 @@
       {
         "label": "Bundle Python Files",
         "type": "shell",
-        "command": "/workspaces/FINAL_169B_24-25/src/bundle.sh",
+        "command": "/Users/jaybot/Downloads/FINAL_169B_24-25/src/bundle.sh",
         "group": {
           "kind": "build",
           "isDefault": true
