@@ -90,6 +90,7 @@ INTAKEF = False
 INTAKER = False
 LB = False
 DOon2 = False
+DOon3 = False
 Blue = False
 Red = False
 Intake_Control = False

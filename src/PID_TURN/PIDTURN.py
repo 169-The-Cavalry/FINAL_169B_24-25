@@ -197,6 +197,7 @@ def vexcode_driver_function():
     driver_control_task_2 = Thread( ondriver_drivercontrol_2 )
     driver_control_task_3 = Thread( ondriver_drivercontrol_3 )
     driver_control_task_4 = Thread( ondriver_drivercontrol_4 )
+    driver_control_task_5 = Thread( ondriver_drivercontrol_5 )
 
     # wait for the driver control period to end
     while( competition.is_driver_control() and competition.is_enabled() ):
@@ -208,6 +209,7 @@ def vexcode_driver_function():
     driver_control_task_2.stop()
     '''driver_control_task_3.stop()'''
     driver_control_task_4.stop()
+    driver_control_task_5.stop()
 
 
 # register the competition functions
