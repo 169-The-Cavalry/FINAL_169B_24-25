@@ -451,7 +451,7 @@ import math
 
 
 # PID Constants for Distance Control
-kP_distance = 1.0
+kP_distance = 1.5
 kI_distance = 0.0  
 kD_distance = 0.1
 
@@ -550,9 +550,32 @@ def onauton_autonomous_0():
     global turn_heading_velocity_momentum, Forward_PID_Distance_Max_Speed, message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
     # GLOBAL FINAL AUTONOMOUS SELECTION
     remote_control_code_enabled = False
+
     stop_initialize.broadcast()
     # AUTO SELECT
-    RED_LEFT_RING()
+    intake.spin(FORWARD)
+    wait(1, SECONDS)
+    intake.stop()
+    pid_drive(20, 100)
+    wait(0.5, SECONDS)
+    pid_turn(-100, 100)
+    wait(0.5, SECONDS)
+    pid_drive(71, 100)
+    wait(0.5, SECONDS)
+    pid_drive(-15, 100)
+    wait(0.5, SECONDS)
+    pid_turn(185, 100)
+    pid_drive(90, 100) 
+    pid_turn(40, 100)
+    pid_drive(47, 100)
+    pid_drive(-40, 100)
+    pid_turn(-90, 100)
+    pid_drive(20, 100)
+
+
+    
+
+
     
 
 
@@ -653,7 +676,8 @@ def BLUE_LEFT_RING():
 def BLUE_RIGHT_GOAL_RUSH():
     color_sensing_RED_thread = Thread(RED_EJECT)
 
-
+def Skills_run():
+    pid_drive(70, 80)
 
 
 
@@ -835,7 +859,7 @@ def pid_turn(target_heading, max_velocity):
     
     # PID Constants (Adjusted for faster turns)
     Kp = 0.65  # Increased proportional gain by 20% for faster response
-    Kd = 0.43  # Derivative gain (kept the same for stability)
+    Kd = 0.44  # Derivative gain (kept the same for stability)
 
     # Get current heading (DO NOT RESET IMU)
     start_heading = Inertial21.rotation(DEGREES)

@@ -3,7 +3,7 @@ import math
 
 
 # PID Constants for Distance Control
-kP_distance = 1.0
+kP_distance = 1.5
 kI_distance = 0.0  
 kD_distance = 0.1
 
