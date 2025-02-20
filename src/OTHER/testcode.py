@@ -1,4 +1,22 @@
+def anti_jam():
+        """ Detects intake stall and reverses to clear jams. """
+        jam_timer = 0
+         
+        while Intake_running:
+            if intake.velocity == 0: # Detects jam if motor is not moving
+                jam_timer += 1
+                if jam_timer > 10:  # If stalled for 10 iterations (~50ms each)
+                    intake.spin(REVERSE)  # Reverse intake
+                    wait(500, MSEC)  # Allow jam clearing
+                    intake.spin(FORWARD)  # Resume normal operation
+                    jam_timer = 0  # Reset jam detection timer
+            else:
+                jam_timer = 0  # Reset if intake moves normally
+            wait(5, MSEC)
 
+    while True:
+        anti_jam()
+        wait(10, MSEC)  # Reduce unnecessary CPU usage
 
 def BLUE_EJECT():
     """Stops intake when a blue ring is detected."""
