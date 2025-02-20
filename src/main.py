@@ -17,7 +17,7 @@ def update_auto_display():
 
     # Display selected Autonomous Mode with background color (if supported)
     controller_1.screen.set_cursor(1, 1)
-    controller_1.screen.print("> {auto_modes[AutoSelect]} <")
+    controller_1.screen.print("{auto_modes[AutoSelect]}")
 
     # Display Navigation Instructions with bold styling
     controller_1.screen.set_cursor(2, 1)
@@ -163,7 +163,7 @@ LB = False
 DOon2 = False
 DOon3 = False
 Blue = False
-Red = False
+RED = False
 Intake_Control = False
 Intake_running = False
 myVariable = 0
@@ -348,7 +348,7 @@ def when_started4():
     # CALIBRATE AND INIT
     optical_4.gesture_disable()
     optical_4.set_light(LedStateType.ON)
-    optical_4.set_light_power(50, PERCENT)
+    optical_4.set_light_power(100, PERCENT)
     start = 1
     Degree = 0
     pi = 3.14159265359
@@ -360,6 +360,7 @@ def when_started4():
     Inertial21.calibrate()
     while Inertial21.is_calibrating():
         sleep(50)
+    RED = False
 
 def onevent_stop_initialize_0():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
@@ -553,13 +554,65 @@ def onauton_autonomous_0():
 
     stop_initialize.broadcast()
     # AUTO SELECT
+    intake.set_velocity(80, PERCENT)
+    SKILLS_PROGRAM()
+
+
+    
+
+def SKILLS_PROGRAM():
+    Lady_Brown.spin_to_position(350, DEGREES)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(0, DEGREES)
+    wait(0.5, SECONDS)
+    pid_turn(-20, 100)
+    pid_drive(-19, 100)
+    wait(0.5, SECONDS)
+    digital_out_b.set(True)
+    pid_turn(-120, 100)
     intake.spin(FORWARD)
+    pid_drive(30, 100)
     wait(1, SECONDS)
-    intake.stop()
+    pid_turn(-77, 100)
+    pid_drive(30, 100)
+
+    wait(1, SECONDS)
+    pid_turn(-85, 100)
     pid_drive(20, 100)
-    wait(0.5, SECONDS)
-    pid_turn(-100, 100)
-    wait(0.5, SECONDS)
+    wait(1, SECONDS)
+    pid_drive(25, 100)
+    wait(1, SECONDS)
+    pid_turn(-90, 100)
+    pid_drive(-20, 100)
+    digital_out_b.set(False)
+    wait(0.5,SECONDS)
+    intake.spin(REVERSE)
+    wait(0.5,SECONDS)
+    pid_drive(70, 100)
+    intake.spin(FORWARD)
+    pid_turn(200,100)
+    pid_drive(-25, 100)
+    digital_out_b.set(True)
+    pid_turn(100,100)
+    pid_drive(25, 100)
+
+
+    wait(1,SECONDS)
+    pid_turn(80,100)
+    pid_drive(25, 100)
+    wait(1,SECONDS)
+    pid_turn(90,100)
+    pid_drive(25, 100)
+    wait(1,SECONDS)
+    pid_drive(25, 100)
+    pid_turn(-90,100)
+
+
+
+
+
+    '''wait(0.5, SECONDS)
+    pid_turn(104, 100)
     pid_drive(71, 100)
     wait(0.5, SECONDS)
     pid_drive(-15, 100)
@@ -567,13 +620,14 @@ def onauton_autonomous_0():
     pid_turn(185, 100)
     pid_drive(90, 100) 
     pid_turn(40, 100)
-    pid_drive(47, 100)
+    pid_drive(40, 40)
     pid_drive(-40, 100)
     pid_turn(-90, 100)
-    pid_drive(20, 100)
+    pid_drive(60, 100)
+    pid_turn(-20, 100)
+    pid_drive(80, 100)
+    pid_turn(-100, 100)'''
 
-
-    
 
 
     
@@ -676,9 +730,6 @@ def BLUE_LEFT_RING():
 def BLUE_RIGHT_GOAL_RUSH():
     color_sensing_RED_thread = Thread(RED_EJECT)
 
-def Skills_run():
-    pid_drive(70, 80)
-
 
 
 
@@ -689,6 +740,7 @@ def onevent_controller_1axis2Changed_0():
     Right_Axis = controller_1.axis2.position()
 
 def ondriver_drivercontrol_4():
+    
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
     # INTAKE CONTROLLER CONTROL
     while True:
@@ -776,64 +828,69 @@ def ondriver_drivercontrol_2():
         wait(5, MSEC)'''
 
 def ondriver_drivercontrol_3():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # CONTROLLER SWEEPER CONTROL
+    global DOon2  # Assuming DOon keeps track of clamp state
+    previous_button_state2 = False  # Track previous button press
+
     while True:
-        if controller_1.buttonA.pressing():
-            if DOon2:
-                digital_out_g.set(True)
-                DOon2 = False
-                wait(0.1, SECONDS)
-            else:
-                digital_out_g.set(False)
-                DOon2 = True
-                wait(0.1, SECONDS)
-            wait(0.2, SECONDS)
-        wait(5, MSEC)
+        current_button_state2 = controller_1.buttonX.pressing()
+
+        # Detect the moment the button is first pressed
+        if current_button_state2 and not previous_button_state2:
+            DOon2 = not DOon2  # Toggle state
+            digital_out_e.set(DOon2)  # Actuate clamp
+            wait(0.1, SECONDS)  # Debounce delay
+
+        previous_button_state2 = current_button_state2  # Update state tracking
+        wait(5, MSEC)  # Prevent CPU overuse
 
 
 
 def ondriver_drivercontrol_5():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # CONTROLLER SWEEPER 2 CONTROL
+    global DOon3  # Assuming DOon keeps track of clamp state
+    previous_button_state3 = False  # Track previous button press
+
     while True:
-        if controller_1.buttonA.pressing():
-            if DOon3:
-                digital_out_e.set(True)
-                DOon3 = False
-                wait(0.1, SECONDS)
-            else:
-                digital_out_e.set(False)
-                DOon3 = True
-                wait(0.1, SECONDS)
-            wait(0.2, SECONDS)
-        wait(5, MSEC)
+        current_button_state3 = controller_1.buttonA.pressing()
+
+        # Detect the moment the button is first pressed
+        if current_button_state3 and not previous_button_state3:
+            DOon3 = not DOon3  # Toggle state
+            digital_out_g.set(DOon3)  # Actuate clamp
+            wait(0.1, SECONDS)  # Debounce delay
+
+        previous_button_state3 = current_button_state3  # Update state tracking
+        wait(5, MSEC)  # Prevent CPU overuse
         
 def ondriver_drivercontrol_0():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # INTAKE CONTROLLER CONTROL
+    global intake, optical_4, Intake_Control
+    """Stops intake when a blue ring is detected."""
     while True:
-        while Intake_Control:
-            if controller_1.buttonR1.pressing():
-                intake.set_velocity(80, PERCENT)
-                intake.spin(FORWARD)
-            elif controller_1.buttonR2.pressing():
-                intake.set_velocity(80, PERCENT)
-                intake.spin(REVERSE)
-            else:
-                intake.stop()
-            wait(5, MSEC)
-        
-
-pass
+        # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
+        if  optical_4.color() == Color.BLUE:
+            Intake_Control = False
+            intake.set_velocity(10,PERCENT)  # Stop intake immediately
+            wait(0.5, SECONDS)
+            Intake_Control = True
+        while RED:
+            # Check if optical sensor detects a red ring
+            if optical_4.is_near_object() and optical_4.color() == Color.RED:
+                Intake_Control = False
+                intake.stop()  # Stop intake immediately
+                wait(0.0, SECONDS)
+                Intake_Control = True
+                wait(10, MSEC)  # Small delay to reduce CPU usagepass
 
 def BLUE_EJECT():
+    global intake, optical_4, Intake_Control
     """Stops intake when a blue ring is detected."""
     while True:
         
         # Check if optical sensor detects a blue ring
         if optical_4.is_near_object() and 200 < optical_4.hue() < 260:
             intake.stop()  # Stop intake immediately
+            wait(0.2, SECONDS)
+
         
         wait(10, MSEC)  # Small delay to reduce CPU usage
 
@@ -844,7 +901,6 @@ def RED_EJECT():
         # Check if optical sensor detects a red ring
         if optical_4.is_near_object() and 0 < optical_4.hue() < 60:
             intake.stop()  # Stop intake immediately
-        
         wait(10, MSEC)  # Small delay to reduce CPU usage
 
 
@@ -859,7 +915,7 @@ def pid_turn(target_heading, max_velocity):
     
     # PID Constants (Adjusted for faster turns)
     Kp = 0.65  # Increased proportional gain by 20% for faster response
-    Kd = 0.44  # Derivative gain (kept the same for stability)
+    Kd = 0.45  # Derivative gain (kept the same for stability)
 
     # Get current heading (DO NOT RESET IMU)
     start_heading = Inertial21.rotation(DEGREES)
@@ -875,7 +931,7 @@ def pid_turn(target_heading, max_velocity):
         error = target - Inertial21.rotation(DEGREES)
 
         # If the error is small enough, stop
-        if abs(error) < 0.5:  # Close enough threshold for accuracy
+        if abs(error) < 1:  # Close enough threshold for accuracy
             break
 
         # Timeout safety to prevent infinite loops

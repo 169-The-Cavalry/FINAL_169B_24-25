@@ -7,13 +7,65 @@ def onauton_autonomous_0():
 
     stop_initialize.broadcast()
     # AUTO SELECT
+    intake.set_velocity(80, PERCENT)
+    SKILLS_PROGRAM()
+
+
+    
+
+def SKILLS_PROGRAM():
+    Lady_Brown.spin_to_position(350, DEGREES)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(0, DEGREES)
+    wait(0.5, SECONDS)
+    pid_turn(-20, 100)
+    pid_drive(-19, 100)
+    wait(0.5, SECONDS)
+    digital_out_b.set(True)
+    pid_turn(-120, 100)
     intake.spin(FORWARD)
+    pid_drive(30, 100)
     wait(1, SECONDS)
-    intake.stop()
+    pid_turn(-77, 100)
+    pid_drive(30, 100)
+
+    wait(1, SECONDS)
+    pid_turn(-85, 100)
     pid_drive(20, 100)
-    wait(0.5, SECONDS)
-    pid_turn(-100, 100)
-    wait(0.5, SECONDS)
+    wait(1, SECONDS)
+    pid_drive(25, 100)
+    wait(1, SECONDS)
+    pid_turn(-90, 100)
+    pid_drive(-20, 100)
+    digital_out_b.set(False)
+    wait(0.5,SECONDS)
+    intake.spin(REVERSE)
+    wait(0.5,SECONDS)
+    pid_drive(70, 100)
+    intake.spin(FORWARD)
+    pid_turn(200,100)
+    pid_drive(-25, 100)
+    digital_out_b.set(True)
+    pid_turn(100,100)
+    pid_drive(25, 100)
+
+
+    wait(1,SECONDS)
+    pid_turn(80,100)
+    pid_drive(25, 100)
+    wait(1,SECONDS)
+    pid_turn(90,100)
+    pid_drive(25, 100)
+    wait(1,SECONDS)
+    pid_drive(25, 100)
+    pid_turn(-90,100)
+
+
+
+
+
+    '''wait(0.5, SECONDS)
+    pid_turn(104, 100)
     pid_drive(71, 100)
     wait(0.5, SECONDS)
     pid_drive(-15, 100)
@@ -21,13 +73,14 @@ def onauton_autonomous_0():
     pid_turn(185, 100)
     pid_drive(90, 100) 
     pid_turn(40, 100)
-    pid_drive(47, 70)
+    pid_drive(40, 40)
     pid_drive(-40, 100)
     pid_turn(-90, 100)
-    pid_drive(20, 100)
+    pid_drive(60, 100)
+    pid_turn(-20, 100)
+    pid_drive(80, 100)
+    pid_turn(-100, 100)'''
 
-
-    
 
 
     
@@ -129,8 +182,5 @@ def BLUE_LEFT_RING():
 
 def BLUE_RIGHT_GOAL_RUSH():
     color_sensing_RED_thread = Thread(RED_EJECT)
-
-def Skills_run():
-    pid_drive(70, 80)
 
 

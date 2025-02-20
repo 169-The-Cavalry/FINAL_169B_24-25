@@ -6,7 +6,7 @@ def pid_turn(target_heading, max_velocity):
     
     # PID Constants (Adjusted for faster turns)
     Kp = 0.65  # Increased proportional gain by 20% for faster response
-    Kd = 0.44  # Derivative gain (kept the same for stability)
+    Kd = 0.45  # Derivative gain (kept the same for stability)
 
     # Get current heading (DO NOT RESET IMU)
     start_heading = Inertial21.rotation(DEGREES)
@@ -22,7 +22,7 @@ def pid_turn(target_heading, max_velocity):
         error = target - Inertial21.rotation(DEGREES)
 
         # If the error is small enough, stop
-        if abs(error) < 0.5:  # Close enough threshold for accuracy
+        if abs(error) < 1:  # Close enough threshold for accuracy
             break
 
         # Timeout safety to prevent infinite loops
