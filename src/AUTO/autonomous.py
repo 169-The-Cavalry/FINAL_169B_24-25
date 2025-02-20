@@ -21,7 +21,7 @@ def onauton_autonomous_0():
     pid_turn(185, 100)
     pid_drive(90, 100) 
     pid_turn(40, 100)
-    pid_drive(47, 100)
+    pid_drive(47, 70)
     pid_drive(-40, 100)
     pid_turn(-90, 100)
     pid_drive(20, 100)
