@@ -49,6 +49,11 @@ def ondriver_drivercontrol_6():
             Lady_Brown.set_stopping(COAST)
             Lady_Brown.stop()
             rotation_15.set_position(300, DEGREES)
+        
+        elif controller_1.buttonRight.pressing():
+            Lady_Brown.set_stopping(COAST)
+            Lady_Brown.stop()
+            rotation_15.set_position(300, DEGREES)
 
         wait(5, MSEC)  # Reduce CPU usage'''
 
