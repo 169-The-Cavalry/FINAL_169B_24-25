@@ -1,6 +1,6 @@
 import time
 
-# Autonomous Mode Options (Formatted for VEX Controller)
+# Autonomous Mode Options
 auto_modes = [
     "[NO AUTO]",
     "[RED LEFT RING]",
@@ -12,63 +12,46 @@ auto_modes = [
 AutoSelect = 0  # Default to NO AUTO
 
 def update_auto_display():
-    """Updates the controller screen with a dynamic animation effect."""
+    """Updates the controller screen with the selected autonomous mode."""
     controller_1.screen.clear_screen()
-
-    # Display selected Autonomous Mode with background color (if supported)
     controller_1.screen.set_cursor(1, 1)
-    controller_1.screen.print("{auto_modes[AutoSelect]}")
-
-    # Display Navigation Instructions with bold styling
+    controller_1.screen.print(auto_modes[AutoSelect])
     controller_1.screen.set_cursor(2, 1)
-  
-    controller_1.screen.print("<< SELECT >>")
+    controller_1.screen.print("<< L1 | L2 >>")  # Navigation instructions
 
-
-    # Rumble feedback with more intensity for better interaction
-    controller_1.rumble("...")
-
-def fancy_scroll_effect():
-    """Creates a cool flashing effect when switching modes."""
-    for _ in range(2):
-        controller_1.screen.clear_screen()
-        wait(50, MSEC)
-        update_auto_display()
-
-def smooth_scroll_effect():
-    """Smooth scrolling text effect when switching modes."""
-    for i in range(len(auto_modes[AutoSelect])):
-        controller_1.screen.set_cursor(1, 1)
-        controller_1.screen.print(auto_modes[AutoSelect][:i + 1])
-        wait(50, MSEC)
-    update_auto_display()
-
-def onevent_controller_1buttonL1_pressed_0():
+def next_auto_mode():
     """Scroll to the NEXT autonomous mode."""
     global AutoSelect
     AutoSelect = (AutoSelect + 1) % len(auto_modes)
-    controller_1.rumble("-.-")  # Short rumble for next mode
-    smooth_scroll_effect()  # Apply smooth scrolling effect
+    controller_1.rumble(".")
+    update_auto_display()
 
-def onevent_controller_1buttonL2_pressed_0():
+def previous_auto_mode():
     """Scroll to the PREVIOUS autonomous mode."""
     global AutoSelect
     AutoSelect = (AutoSelect - 1) % len(auto_modes)
-    controller_1.rumble("-..")  # Short rumble for previous mode
-    smooth_scroll_effect()  # Apply smooth scrolling effect
+    controller_1.rumble(".")
+    update_auto_display()
 
 def when_started6():
-    """Initialize the auto selector with a visually clean display."""
+    """Initialize the auto selector."""
     controller_1.screen.clear_screen()
     controller_1.screen.set_cursor(1, 1)
     controller_1.screen.print("AUTO SELECT MODE")
+    time.sleep(0.5)  # Brief delay before displaying options
+    update_auto_display()
 
-    # Quick flashing effect to draw attention
-    for _ in range(3):
-        controller_1.screen.print(".")
-        wait(200, MSEC)
+# Bind button events
 
-    update_auto_display()  # Show initial auto mode'''
+def onevent_controller_1buttonL1_pressed_0():
+    next_auto_mode()
+
+def onevent_controller_1buttonL2_pressed_0():
+    previous_auto_mode()
+
+
+
+
 
 
 
@@ -105,7 +88,7 @@ Lady_Brown_motor_b = Motor(Ports.PORT10, GearSetting.RATIO_6_1, False)
 Lady_Brown = MotorGroup(Lady_Brown_motor_a, Lady_Brown_motor_b)
 Inertial21 = Inertial(Ports.PORT5)
 digital_out_g = DigitalOut(brain.three_wire_port.g)
-optical_4 = Optical(Ports.PORT11)
+optical_4 = Optical(Ports.PORT14)
 intake = Motor(Ports.PORT8, GearSetting.RATIO_6_1, True)
 digital_out_e = DigitalOut(brain.three_wire_port.e)
 gps_3 = Gps(Ports.PORT3, 0.00, 5.00, MM, -90)
@@ -164,6 +147,7 @@ DOon2 = False
 DOon3 = False
 Blue = False
 RED = False
+BLUE = False
 Intake_Control = False
 Intake_running = False
 myVariable = 0
@@ -249,7 +233,7 @@ def ondriver_drivercontrol_6():
 
         # Move back (controller LEFT button) with SAFEGUARD
         elif controller_1.buttonLeft.pressing():
-            Lady_Brown.set_velocity(40, PERCENT)
+            Lady_Brown.set_velocity(80, PERCENT)
             Lady_Brown.set_stopping(COAST)
             Lady_Brown.spin(REVERSE)
 
@@ -348,7 +332,6 @@ def when_started4():
     # CALIBRATE AND INIT
     optical_4.gesture_disable()
     optical_4.set_light(LedStateType.ON)
-    optical_4.set_light_power(100, PERCENT)
     start = 1
     Degree = 0
     pi = 3.14159265359
@@ -360,7 +343,7 @@ def when_started4():
     Inertial21.calibrate()
     while Inertial21.is_calibrating():
         sleep(50)
-    RED = False
+
 
 def onevent_stop_initialize_0():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
@@ -455,7 +438,7 @@ import math
 kP_distance = 1.5
 kI_distance = 0.0  
 kD_distance = 0.1
-
+timeout = 10
 # PID Constant for Heading Correction
 kP_heading = 0.05
 
@@ -554,10 +537,30 @@ def onauton_autonomous_0():
 
     stop_initialize.broadcast()
     # AUTO SELECT
-    intake.set_velocity(80, PERCENT)
-    RED_RIGHT_GOAL_RUSH()
-    '''RED_LEFT_RING()'''
+    intake.set_velocity(100, PERCENT)
+    run_autonomous()
+    '''SKILLS_PROGRAM()'''
 
+def run_autonomous():
+    global AutoSelect
+    """Executes the selected autonomous routine."""
+    if AutoSelect == 0:
+        no_auto()
+    elif AutoSelect == 1:
+        RED_LEFT_RING()
+    elif AutoSelect == 2:
+        BLUE_RIGHT_RING()
+    elif AutoSelect == 3:
+        RED_RIGHT_SAFE()
+    elif AutoSelect == 4:
+        BLUE_LEFT_SAFE()
+
+# === AUTONOMOUS ROUTINES ===
+
+def no_auto():
+    global brain
+    """No autonomous action."""
+    brain.screen.print("No autonomous selected.")
 
     
 
@@ -611,127 +614,91 @@ def SKILLS_PROGRAM():
     digital_out_b.set(False)
 
 
-
-
-
-    '''wait(0.5, SECONDS)
-    pid_turn(104, 100)
-    pid_drive(71, 100)
-    wait(0.5, SECONDS)
-    pid_drive(-15, 100)
-    wait(0.5, SECONDS)
-    pid_turn(185, 100)
-    pid_drive(90, 100) 
-    pid_turn(40, 100)
-    pid_drive(40, 40)
-    pid_drive(-40, 100)
-    pid_turn(-90, 100)
-    pid_drive(60, 100)
-    pid_turn(-20, 100)
-    pid_drive(80, 100)
-    pid_turn(-100, 100)'''
-
-
-
-    
-
-
-
 def RED_LEFT_RING():
-    color_sensing_BLUE_thread = Thread(BLUE_EJECT)
-    pid_drive(10, 100)
-    wait(0.1, SECONDS)
+    pid_drive(11, 100)
     Lady_Brown.spin_to_position(360, DEGREES)
-    wait(0.5, SECONDS)
+    wait(0.1, SECONDS)
     Lady_Brown.spin_to_position(0, DEGREES)
-    wait(0.1, SECONDS)
-    '''pid_turn(1, 100)'''
-    wait(0.1, SECONDS)
-    pid_drive(-40, 80)
-    wait(0.4, SECONDS)
+    pid_drive(-40, 100)
     digital_out_b.set(True)
-    wait(0.1, SECONDS)
     pid_turn(170, 100)
     intake.spin(FORWARD)
-    pid_drive(30, 80)
-    wait(1, SECONDS)
-    pid_drive(-10, 80)
-    pid_turn(-10, 100)
-    pid_drive(15, 80)
-    wait(1, SECONDS)
-    pid_drive(-10, 80)
+    pid_drive(30, 100)
+    pid_drive(-10, 100)
+    pid_turn(-5, 100)
+    pid_drive(16, 100)
+    pid_drive(-12, 100)
+    pid_turn(-50, 100)
+    pid_drive(13, 100)
+    pid_turn(180, 100)
+    Lady_Brown.spin_to_position(300, DEGREES)
+    pid_drive(35, 100)
+
+def BLUE_RIGHT_RING():
+    pid_drive(11, 100)
+    Lady_Brown.spin_to_position(360, DEGREES)
     wait(0.1, SECONDS)
-    pid_turn(100, 100)
-    wait(0.1, SECONDS)
-    pid_drive(15, 80)
+    Lady_Brown.spin_to_position(0, DEGREES)
+    pid_drive(-40, 100)
+    digital_out_b.set(True)
+    pid_turn(-170, 100)
+    intake.spin(FORWARD)
+    pid_drive(30, 100)
+    pid_drive(-10, 100)
+    pid_turn(5, 100)
+    pid_drive(16, 100)
+    pid_drive(-12, 100)
+    pid_turn(50, 100)
+    pid_drive(13, 100)
+    pid_turn(-180, 100)
+    Lady_Brown.spin_to_position(300, DEGREES)
+    pid_drive(35, 100)
+
+def RED_RIGHT_SAFE():
+    pid_drive(-40, 100)
+    digital_out_b.set(True)
+    intake.spin(FORWARD)
+    pid_turn(-45, 100)
+    pid_drive(25, 100)
     wait(1, SECONDS)
     intake.stop()
-    wait(0.1, SECONDS)
-    pid_turn(160, 100)
-    wait(0.1, SECONDS)
-    Lady_Brown.spin_to_position(200, DEGREES)
-    wait(0.1, SECONDS)
-    pid_drive(30, 80)
-
-
-def RED_RIGHT_GOAL_RUSH():
-    pid_drive(55, 100)
-    pid_turn(-10, 100)
-    pid_drive(2, 100)
-    digital_out_e.set(True)
-    pid_drive(-15, 80)
-    pid_turn(10, 100)
-    pid_drive(-15, 80)
-    digital_out_e.set(False)
-    pid_turn(-180, 100)
-    pid_drive(-10, 80)
-    digital_out_b.set(True)
-    intake.spin(FORWARD)
-    wait(1, SECONDS)
-    digital_out_b.set(False)
-    pid_drive(20, 80)
-    pid_turn(-90, 100)
-    wait(0.1, SECONDS)
-    pid_drive(-30, 80)
-    '''wait(0.1, SECONDS)
     digital_out_g.set(True)
-    wait(0.1, SECONDS)
-    intake.spin(FORWARD)
-    wait(1, SECONDS)
-    digital_out_g.set(False)
-    wait(0.1, SECONDS)
-    pid_drive(20, 80)
-    wait(0.1, SECONDS)
-    pid_turn(60, 100)
-    wait(0.1, SECONDS)
-    pid_drive(-40, 80)
-    wait(0.1, SECONDS)
-    digital_out_g.set(True)
-    wait(0.1, SECONDS)
+    pid_turn(-40, 100)
+    pid_turn(80, 100)
+    pid_drive(30, 100)
     pid_turn(40, 100)
-    wait(0.1, SECONDS)
-    pid_drive(40, 80)
-    wait(0.1, SECONDS)
-    pid_turn(180, 100)
-    wait(0.1, SECONDS)
-    Lady_Brown.spin_to_position(200, DEGREES)
-    wait(0.1, SECONDS)
-    pid_drive(20, 80)'''
+    pid_drive(30, 100)
+    pid_turn(90, 100)
+    digital_out_g.set(False)
+    pid_turn(-90, 100)
+    intake.spin(FORWARD)
+    pid_drive(12, 100)
+    wait(1, SECONDS)
+    intake.stop()
+    pid_drive(-30, 100)
     
-
-
-    '''pid_drive(-50, 80)
+def BLUE_LEFT_SAFE():
+    pid_drive(-40, 100)
     digital_out_b.set(True)
     intake.spin(FORWARD)
-    pid_turn(180, 100)
-    wait(0.5, SECONDS)
-    Lady_Brown.spin_to_position(200, DEGREES)'''
-    
-def BLUE_LEFT_RING():
-    color_sensing_RED_thread = Thread(RED_EJECT)
-
-def BLUE_RIGHT_GOAL_RUSH():
-    color_sensing_RED_thread = Thread(RED_EJECT)
+    pid_turn(45, 100)
+    pid_drive(25, 100)
+    wait(1, SECONDS)
+    intake.stop()
+    digital_out_e.set(True)
+    pid_turn(40, 100)
+    pid_turn(-80, 100)
+    pid_drive(30, 100)
+    pid_turn(-40, 100)
+    pid_drive(30, 100)
+    pid_turn(-90, 100)
+    digital_out_e.set(False)
+    pid_turn(90, 100)
+    intake.spin(FORWARD)
+    pid_drive(12, 100)
+    wait(1, SECONDS)
+    intake.stop()
+    pid_drive(-30, 100)
 
 
 
@@ -749,10 +716,10 @@ def ondriver_drivercontrol_4():
     while True:
         while Intake_Control:
             if controller_1.buttonR1.pressing():
-                intake.set_velocity(80, PERCENT)
+                intake.set_velocity(100, PERCENT)
                 intake.spin(FORWARD)
             elif controller_1.buttonR2.pressing():
-                intake.set_velocity(80, PERCENT)
+                intake.set_velocity(100, PERCENT)
                 intake.spin(REVERSE)
             else:
                 intake.stop()
@@ -864,26 +831,27 @@ def ondriver_drivercontrol_5():
         previous_button_state3 = current_button_state3  # Update state tracking
         wait(5, MSEC)  # Prevent CPU overuse
         
-def ondriver_drivercontrol_0():
+'''def ondriver_drivercontrol_0():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    global intake, optical_4, Intake_Control
+    global intake, optical_4, Intake_Control, BLUE, RED
     """Stops intake when a blue ring is detected."""
     while True:
-        # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
-        if  optical_4.color() == Color.BLUE:
-            Intake_Control = False
-            intake.set_velocity(10,PERCENT)  # Stop intake immediately
-            wait(0.5, SECONDS)
+        while BLUE:
+            # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
+            if  230 > optical_4.hue() > 200 :
+                Intake_Control = False
+                intake.stop()  # Stop intake immediately
+                wait(0.1, SECONDS)
             Intake_Control = True
         while RED:
             # Check if optical sensor detects a red ring
-            if optical_4.is_near_object() and optical_4.color() == Color.RED:
+            if optical_4.color() == Color.RED:
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
                 wait(0.0, SECONDS)
                 Intake_Control = True
-                wait(10, MSEC)  # Small delay to reduce CPU usagepass
-
+                wait(10, MSEC)  # Small delay to reduce CPU usage'''
+pass
 def BLUE_EJECT():
     global intake, optical_4, Intake_Control
     """Stops intake when a blue ring is detected."""
@@ -1019,7 +987,7 @@ def vexcode_auton_function():
 
 def vexcode_driver_function():
     # Start the driver control tasks
-    driver_control_task_0 = Thread( ondriver_drivercontrol_0 )
+    '''driver_control_task_0 = Thread( ondriver_drivercontrol_0 )'''
     driver_control_task_1 = Thread( ondriver_drivercontrol_1 )
     driver_control_task_2 = Thread( ondriver_drivercontrol_2 )
     driver_control_task_3 = Thread( ondriver_drivercontrol_3 )

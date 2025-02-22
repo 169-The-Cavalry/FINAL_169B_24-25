@@ -6,7 +6,7 @@ import math
 kP_distance = 1.5
 kI_distance = 0.0  
 kD_distance = 0.1
-
+timeout = 10
 # PID Constant for Heading Correction
 kP_heading = 0.05
 

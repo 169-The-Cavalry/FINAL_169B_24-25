@@ -13,10 +13,10 @@ def ondriver_drivercontrol_4():
     while True:
         while Intake_Control:
             if controller_1.buttonR1.pressing():
-                intake.set_velocity(80, PERCENT)
+                intake.set_velocity(100, PERCENT)
                 intake.spin(FORWARD)
             elif controller_1.buttonR2.pressing():
-                intake.set_velocity(80, PERCENT)
+                intake.set_velocity(100, PERCENT)
                 intake.spin(REVERSE)
             else:
                 intake.stop()
@@ -128,22 +128,23 @@ def ondriver_drivercontrol_5():
         previous_button_state3 = current_button_state3  # Update state tracking
         wait(5, MSEC)  # Prevent CPU overuse
         
-def ondriver_drivercontrol_0():
+'''def ondriver_drivercontrol_0():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    global intake, optical_4, Intake_Control
+    global intake, optical_4, Intake_Control, BLUE, RED
     """Stops intake when a blue ring is detected."""
     while True:
-        # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
-        if  optical_4.color() == Color.BLUE:
-            Intake_Control = False
-            intake.set_velocity(10,PERCENT)  # Stop intake immediately
-            wait(0.5, SECONDS)
+        while BLUE:
+            # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
+            if  230 > optical_4.hue() > 200 :
+                Intake_Control = False
+                intake.stop()  # Stop intake immediately
+                wait(0.1, SECONDS)
             Intake_Control = True
         while RED:
             # Check if optical sensor detects a red ring
-            if optical_4.is_near_object() and optical_4.color() == Color.RED:
+            if optical_4.color() == Color.RED:
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
                 wait(0.0, SECONDS)
                 Intake_Control = True
-                wait(10, MSEC)  # Small delay to reduce CPU usage
+                wait(10, MSEC)  # Small delay to reduce CPU usage'''

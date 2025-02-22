@@ -35,7 +35,7 @@ def ondriver_drivercontrol_6():
 
         # Move back (controller LEFT button) with SAFEGUARD
         elif controller_1.buttonLeft.pressing():
-            Lady_Brown.set_velocity(40, PERCENT)
+            Lady_Brown.set_velocity(80, PERCENT)
             Lady_Brown.set_stopping(COAST)
             Lady_Brown.spin(REVERSE)
 
