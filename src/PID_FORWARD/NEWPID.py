@@ -1,11 +1,11 @@
-import math
+'''import math
 
 
 
 # PID Constants for Distance Control
-kP_distance = 1.5
+kP_distance = 1.8
 kI_distance = 0.0  
-kD_distance = 0.1
+kD_distance = 0.7
 timeout = 10
 # PID Constant for Heading Correction
 kP_heading = 0.05
@@ -46,7 +46,7 @@ def pid_drive(distance_inches, max_velocity_percent, timeout=20.0):
         error_distance = distance_inches - (((RightMotors.position(DEGREES)/360)*math.pi*2.75)+((Right_front.position(DEGREES)/360)*math.pi*2.75)+((LeftMotors.position(DEGREES)/360)*math.pi*2.75)+((Left_Front.position(DEGREES)/360)*math.pi*2.75)/4)
 
         # Break if we're within tolerance or timeout has been exceeded
-        if abs(error_distance) < 2 or (brain.timer.time(SECONDS) - start_time) > timeout:
+        if abs(error_distance) < 0.5 or (brain.timer.time(SECONDS) - start_time) > timeout:
             break
         controller_1.screen.set_cursor(1,1)
         wait(0.2,SECONDS)
@@ -94,5 +94,70 @@ def pid_drive(distance_inches, max_velocity_percent, timeout=20.0):
     RightMotors.stop()
     Right_front.stop()
     LeftMotors.stop()
-    Left_Front.stop()
+    Left_Front.stop()'''
+
+import math
+
+# PID Constants for Distance Control
+kP_distance = 0.0
+kI_distance = 0.0  
+kD_distance = 0.0
+timeout = 10
+# PID Constant for Heading Correction
+kP_heading = 0.05
+
+class PID:
+    def __init__(self, kp, ki, kd):
+        self.kp = kp
+        self.ki = ki
+        self.kd = kd
+        self.integral = 0
+        self.last_error = 0
+
+    def update(self, error, dt):
+        self.integral += error * dt
+        derivative = (error - self.last_error) / dt
+        self.last_error = error
+        output = self.kp * error + self.ki * self.integral + self.kd * derivative
+        return output
+
+def pid_drive(distance_inches, max_velocity_percent, timeout=10.0):
+    # ... (rest of the function remains the same)
+    # Capture the starting heading from the IMU
+    target_heading = Inertial21.rotation()
+    pid_distance = PID(kP_distance, kI_distance, kD_distance)
+    pid_heading = PID(kP_heading, 0.0, 0.0)  # Heading PID with no integral or derivative terms
+
+    integral_distance = 0.0
+    last_error_distance = 0.0
+    start_time = brain.timer.time(SECONDS)  # Use Brain's timer
+
+    while True:
+        # ... (rest of the function remains the same)
+
+        # Calculate error in distance (in encoder ticks)
+        error_distance = distance_inches - (((RightMotors.position(DEGREES)/360)*math.pi*2.75)+((Right_front.position(DEGREES)/360)*math.pi*2.75)+((LeftMotors.position(DEGREES)/360)*math.pi*2.75)+((Left_Front.position(DEGREES)/360)*math.pi*2.75)/4)
+
+        # Calculate error in heading (in degrees)
+        error_heading = target_heading - Inertial21.rotation()
+
+        # Update PID controllers
+        output_distance = pid_distance.update(error_distance, brain.timer.time(SECONDS) - start_time)
+        output_heading = pid_heading.update(error_heading, brain.timer.time(SECONDS) - start_time)
+
+        # Combine distance and heading outputs
+        left_output = output_distance - output_heading
+        right_output = output_distance + output_heading
+
+        # Set motor velocities
+        LeftMotors.set_velocity(left_output, PERCENT)
+        RightMotors.set_velocity(right_output, PERCENT)
+        Left_Front.set_velocity(left_output, PERCENT)
+        Right_front.set_velocity(right_output, PERCENT)
+
+        # Spin motors
+        LeftMotors.spin(REVERSE)
+        Left_Front.spin(REVERSE)
+        RightMotors.spin(FORWARD)
+        Right_front.spin(FORWARD)
 

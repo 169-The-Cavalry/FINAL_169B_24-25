@@ -4,7 +4,7 @@
 def pid_turn(target_heading, max_velocity):
     global Inertial21, RightMotors, Right_front, LeftMotors, Left_Front
     
-    # PID Constants (Adjusted for faster turns)
+    # PID Constants (Adjusted for faster turns) 0.65 --- 0.45
     Kp = 0.65  # Increased proportional gain by 20% for faster response
     Kd = 0.45  # Derivative gain (kept the same for stability)
 
@@ -40,7 +40,7 @@ def pid_turn(target_heading, max_velocity):
         speed *= max(0.1, 1 - (abs(error) / target_heading) ** 2)
 
         # Limit speed to max_velocity and reasonable minimum
-        speed = max(min(speed, max_velocity), 15)  # Minimum speed = 15%
+        speed = max(min(speed, max_velocity), 40)  # Minimum speed = 15%
 
         # Apply speed to motors for turning
         if error > 0:  # Turn RIGHT
@@ -98,13 +98,14 @@ def vexcode_auton_function():
     # Start the autonomous control tasks
     
     auton_task_0 = Thread( onauton_autonomous_0 )
+    auton_task_1 = Thread( onauton_autonomous_1 )
     # wait for the driver control period to end
     while( competition.is_autonomous() and competition.is_enabled() ):
         # wait 10 milliseconds before checking again
         wait( 10, MSEC )
     # Stop the autonomous control tasks
     auton_task_0.stop()
-
+    auton_task_1.stop()
 def vexcode_driver_function():
     # Start the driver control tasks
     '''driver_control_task_0 = Thread( ondriver_drivercontrol_0 )'''

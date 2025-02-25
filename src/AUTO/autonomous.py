@@ -8,10 +8,39 @@ def onauton_autonomous_0():
     stop_initialize.broadcast()
     # AUTO SELECT
     intake.set_velocity(100, PERCENT)
-    run_autonomous()
-    '''SKILLS_PROGRAM()'''
 
-def run_autonomous():
+
+    pid_drive(48, 100)
+
+def onauton_autonomous_1():
+    global turn_heading_velocity_momentum, Forward_PID_Distance_Max_Speed, message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision, IntakeF
+    while IntakeF:
+        if intake.velocity(PERCENT) < 10:
+            intake.spin(REVERSE)
+            wait(0.5, SECONDS)
+            intake.spin(FORWARD)
+
+def INTAKEF():
+    global turn_heading_velocity_momentum, Forward_PID_Distance_Max_Speed, message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision, IntakeF
+    IntakeF = True
+    while IntakeF:
+        intake.spin(FORWARD)
+
+    '''Lady_Brown.spin_to_position(360, DEGREES)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(0, DEGREES)'''
+    
+
+
+    '''RED_LEFT_RING()'''
+    '''BLUE_LEFT_SAFE()'''
+    '''RED_RIGHT_SAFE()'''
+    '''BLUE_RIGHT_RING()'''
+    '''run_autonomous()'''
+
+
+
+'''def run_autonomous():
     global AutoSelect
     """Executes the selected autonomous routine."""
     if AutoSelect == 0:
@@ -85,89 +114,35 @@ def SKILLS_PROGRAM():
 
 
 def RED_LEFT_RING():
-    pid_drive(11, 100)
-    Lady_Brown.spin_to_position(360, DEGREES)
-    wait(0.1, SECONDS)
-    Lady_Brown.spin_to_position(0, DEGREES)
-    pid_drive(-40, 100)
-    digital_out_b.set(True)
-    pid_turn(170, 100)
-    intake.spin(FORWARD)
-    pid_drive(30, 100)
-    pid_drive(-10, 100)
-    pid_turn(-5, 100)
-    pid_drive(16, 100)
-    pid_drive(-12, 100)
-    pid_turn(-50, 100)
-    pid_drive(13, 100)
-    pid_turn(180, 100)
-    Lady_Brown.spin_to_position(300, DEGREES)
-    pid_drive(35, 100)
+    
 
 def BLUE_RIGHT_RING():
     pid_drive(11, 100)
     Lady_Brown.spin_to_position(360, DEGREES)
     wait(0.1, SECONDS)
     Lady_Brown.spin_to_position(0, DEGREES)
-    pid_drive(-40, 100)
+    pid_drive(-43, 100)
     digital_out_b.set(True)
-    pid_turn(-170, 100)
+    pid_turn(-103, 100)
     intake.spin(FORWARD)
     pid_drive(30, 100)
-    pid_drive(-10, 100)
-    pid_turn(5, 100)
-    pid_drive(16, 100)
-    pid_drive(-12, 100)
-    pid_turn(50, 100)
-    pid_drive(13, 100)
-    pid_turn(-180, 100)
-    Lady_Brown.spin_to_position(300, DEGREES)
-    pid_drive(35, 100)
-
+    
+    
 def RED_RIGHT_SAFE():
-    pid_drive(-40, 100)
+    pid_drive(-38, 100)
     digital_out_b.set(True)
     intake.spin(FORWARD)
-    pid_turn(-45, 100)
+    pid_turn(-50, 100)
     pid_drive(25, 100)
     wait(1, SECONDS)
-    intake.stop()
-    digital_out_g.set(True)
-    pid_turn(-40, 100)
-    pid_turn(80, 100)
-    pid_drive(30, 100)
-    pid_turn(40, 100)
-    pid_drive(30, 100)
-    pid_turn(90, 100)
-    digital_out_g.set(False)
-    pid_turn(-90, 100)
-    intake.spin(FORWARD)
-    pid_drive(12, 100)
-    wait(1, SECONDS)
-    intake.stop()
-    pid_drive(-30, 100)
+
     
 def BLUE_LEFT_SAFE():
-    pid_drive(-40, 100)
+    pid_drive(-38, 100)
     digital_out_b.set(True)
     intake.spin(FORWARD)
-    pid_turn(45, 100)
+    pid_turn(50, 100)
     pid_drive(25, 100)
-    wait(1, SECONDS)
-    intake.stop()
-    digital_out_e.set(True)
-    pid_turn(40, 100)
-    pid_turn(-80, 100)
-    pid_drive(30, 100)
-    pid_turn(-40, 100)
-    pid_drive(30, 100)
-    pid_turn(-90, 100)
-    digital_out_e.set(False)
-    pid_turn(90, 100)
-    intake.spin(FORWARD)
-    pid_drive(12, 100)
-    wait(1, SECONDS)
-    intake.stop()
-    pid_drive(-30, 100)
+    wait(1, SECONDS)'''
 
 

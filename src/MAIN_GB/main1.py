@@ -38,7 +38,8 @@ optical_4 = Optical(Ports.PORT14)
 intake = Motor(Ports.PORT8, GearSetting.RATIO_6_1, True)
 digital_out_e = DigitalOut(brain.three_wire_port.e)
 gps_3 = Gps(Ports.PORT3, 0.00, 5.00, MM, -90)
-distance_11 = Distance(Ports.PORT11)
+distance_optical = Optical(Ports.PORT11)
+
 
 
 # wait for rotation sensor to fully initialize
@@ -86,14 +87,14 @@ start_auto = Event()
 intake_forward = Event()
 intake_backward = Event()
 DOon = False
-INTAKEF = False
+IntakeF = True
 INTAKER = False
 LB = False
 DOon2 = False
 DOon3 = False
 Blue = False
 RED = False
-BLUE = False
+BLUE = True
 Intake_Control = False
 Intake_running = False
 myVariable = 0

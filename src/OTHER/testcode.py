@@ -1,5 +1,5 @@
 
-def BLUE_EJECT():
+'''def BLUE_EJECT():
     global intake, optical_4, Intake_Control
     """Stops intake when a blue ring is detected."""
     while True:
@@ -19,8 +19,7 @@ def RED_EJECT():
         # Check if optical sensor detects a red ring
         if optical_4.is_near_object() and 0 < optical_4.hue() < 60:
             intake.stop()  # Stop intake immediately
-        wait(10, MSEC)  # Small delay to reduce CPU usage
-
+        wait(10, MSEC)  # Small delay to reduce CPU usage'''
 
 
 
