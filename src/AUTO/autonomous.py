@@ -8,13 +8,53 @@ def onauton_autonomous_0():
     stop_initialize.broadcast()
     # AUTO SELECT
     intake.set_velocity(100, PERCENT)
+    pid_drive(9, 60)
+    wait(1, SECONDS)
+    Lady_Brown.spin_to_position(350, DEGREES)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(0, DEGREES)
+    wait(1, SECONDS)
+    pid_drive(-46, 60)
+    wait(1, SECONDS)
+    digital_out_b.set(True)
+    wait(1, SECONDS)
+    pid_turn(-70, 100)
+    wait(1, SECONDS)
+    pid_turn(-60, 100)
+    wait(1, SECONDS)
+    intake.spin(FORWARD)
+    wait(1, SECONDS)
+    pid_drive(25, 60)
+    wait(1, SECONDS)
+    pid_drive(-10, 60)
+    wait(1, SECONDS)
+    pid_turn(-20, 100)
+    wait(1, SECONDS)
+    pid_drive(10, 60)
+    wait(1, SECONDS)
+    pid_drive(-10, 60)
+    wait(1, SECONDS)
+    pid_turn(-50, 100)
+    wait(1, SECONDS)
+    pid_drive(15, 60)
 
 
-    pid_drive(48, 100)
+    '''wait(1, SECONDS)
+    pid_turn(70, 100)
+    wait(1, SECONDS)
+    pid_turn(70, 100)
+    wait(1, SECONDS)
+    pid_turn(70, 100)
+    wait(1, SECONDS)
+    pid_turn(70, 100)
+    wait(1, SECONDS)
+    pid_turn(70, 100)
+    wait(1, SECONDS)
+    pid_turn(140, 100)'''
 
 def onauton_autonomous_1():
     global turn_heading_velocity_momentum, Forward_PID_Distance_Max_Speed, message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision, IntakeF
-    while IntakeF:
+    while not IntakeF:
         if intake.velocity(PERCENT) < 10:
             intake.spin(REVERSE)
             wait(0.5, SECONDS)

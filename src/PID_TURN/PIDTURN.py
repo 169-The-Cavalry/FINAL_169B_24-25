@@ -10,7 +10,7 @@ def pid_turn(target_heading, max_velocity):
 
     # Get current heading (DO NOT RESET IMU)
     start_heading = Inertial21.rotation(DEGREES)
-    target = start_heading + (target_heading - 5)  # Adjust for relative turning
+    target = start_heading + (target_heading )  # Adjust for relative turning
 
     # Initialize PID variables
     prev_error = 0
@@ -22,7 +22,7 @@ def pid_turn(target_heading, max_velocity):
         error = target - Inertial21.rotation(DEGREES)
 
         # If the error is small enough, stop
-        if abs(error) < 1:  # Close enough threshold for accuracy
+        if abs(error) < 7:  # Close enough threshold for accuracy
             break
 
         # Timeout safety to prevent infinite loops
@@ -108,7 +108,7 @@ def vexcode_auton_function():
     auton_task_1.stop()
 def vexcode_driver_function():
     # Start the driver control tasks
-    '''driver_control_task_0 = Thread( ondriver_drivercontrol_0 )'''
+    driver_control_task_0 = Thread( ondriver_drivercontrol_0 )
     driver_control_task_1 = Thread( ondriver_drivercontrol_1 )
     driver_control_task_2 = Thread( ondriver_drivercontrol_2 )
     driver_control_task_3 = Thread( ondriver_drivercontrol_3 )
@@ -121,7 +121,7 @@ def vexcode_driver_function():
         # wait 10 milliseconds before checking again
         wait( 10, MSEC )
     # Stop the driver control tasks
-    '''driver_control_task_0.stop()'''
+    driver_control_task_0.stop()
     driver_control_task_1.stop()
     driver_control_task_2.stop()
     '''driver_control_task_3.stop()'''
