@@ -1,11 +1,4 @@
 
-
-
-def onevent_controller_1axis2Changed_0():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # CONTROLLER jOYSTICK
-    Right_Axis = controller_1.axis2.position()
-
 def ondriver_drivercontrol_4():
     
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
@@ -22,6 +15,15 @@ def ondriver_drivercontrol_4():
                 intake.stop()
             wait(5, MSEC)
         wait(5, MSEC)
+  
+
+def onevent_controller_1axis2Changed_0():
+    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
+    # CONTROLLER jOYSTICK
+    Right_Axis = controller_1.axis2.position()
+
+
+
 
 def onevent_controller_1axis3Changed_0():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
@@ -40,14 +42,14 @@ def ondriver_drivercontrol_1():
     Left_Front.set_stopping(COAST)
     while True:
         if Right_Axis > 0:
-            Right_Axis =  21.6 * Right_Axis ** 1/3
+            Right_Axis =  30 * Right_Axis ** 1/3
         else:
-            Right_Axis = 21.6 * -(math.fabs(Right_Axis) ** 1/3)
+            Right_Axis = 30 * -(math.fabs(Right_Axis) ** 1/3)
 
         if Left_Axis > 0:
-            Left_Axis = 21.6 * (Left_Axis) ** 1/3
+            Left_Axis = 30 * (Left_Axis) ** 1/3
         else:
-            Left_Axis = 21.6 * -(math.fabs(Left_Axis) ** 1/3)
+            Left_Axis = 30 * -(math.fabs(Left_Axis) ** 1/3)
 
         while True:
             RightMotors.set_velocity(Right_Axis, PERCENT)
@@ -61,7 +63,18 @@ def ondriver_drivercontrol_1():
             wait(5, MSEC)
         wait(5, MSEC)
 
-
+def ondriver_drivercontrol_7():
+    pass
+    '''global turn_heading_velocity_momentum, Forward_PID_Distance_Max_Speed, message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision, IntakeF, intake
+    while intake.is_spinning and controller_1.buttonR1.pressing and Intake_Control == True and :
+        if intake.velocity(PERCENT) == 0 :
+            brain.screen.print("STUCK")
+            Intake_Control = False
+            intake.spin(REVERSE)
+            wait(0.3, SECONDS)
+            intake.spin(FORWARD)
+            Intake_Control = True
+            wait(2, SECONDS)'''
 def ondriver_drivercontrol_2():
     global DOon  # Assuming DOon keeps track of clamp state
     previous_button_state = False  # Track previous button press
@@ -134,15 +147,21 @@ def ondriver_drivercontrol_5():
     """Stops intake when a blue ring is detected."""
     while True:
             # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
-        if  230 > optical_4.hue() > 200:
-            brain.screen.print("BLUE")
+            
+        if  230 > optical_4.hue() > 200 and optical_4.is_near_object():
+            wait(0.08, SECONDS)
             Intake_Control = False
+            intake.set_velocity(5, PERCENT)
+            wait(1, SECONDS)
             intake.stop()  # Stop intake immediately
             wait(0.1, SECONDS)
             Intake_Control = True
-        while RED:
+        '''while RED:
             # Check if optical sensor detects a red ring
-            if optical_4.color() == Color.RED:
+            if optical_4.color() == Color.RED and optical_4.is_near_object():
+                brain.screen.clear_screen()
+                wait(0.1, SECONDS)
+                brain.screen.print("RED")
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
                 wait(0.1, SECONDS)
