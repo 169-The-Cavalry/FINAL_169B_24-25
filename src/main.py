@@ -441,12 +441,12 @@ import math
 
 
 # PID Constants for Distance Control
-kP_distance = 1.7
+kP_distance = 2.8
 kI_distance = 0.0
 kD_distance = 1
 timeout = 10
 # PID Constant for Heading Correction
-kP_heading = 0.1
+kP_heading = 0.05
 
 
 
@@ -471,6 +471,7 @@ def pid_drive(distance_inches, max_velocity_percent, timeout=3.0):
     RightMotors.set_position(0, DEGREES)
     Left_Front.set_position(0, DEGREES)
     Right_front.set_position(0, DEGREES)
+    Inertial21.set_rotation(0, DEGREES)
 
     # Capture the starting heading from the IMU
     target_heading = Inertial21.rotation()
@@ -488,10 +489,6 @@ def pid_drive(distance_inches, max_velocity_percent, timeout=3.0):
         # Break if we're within tolerance or timeout has been exceeded
         if abs(error_distance) < 3 or (brain.timer.time(SECONDS) - start_time) > timeout:
             break
-        controller_1.screen.set_cursor(1,1)
-        wait(0.2,SECONDS)
-        controller_1.screen.clear_screen()
-        controller_1.screen.print(error_distance)
 
         # Distance PID calculations
         integral_distance += error_distance
@@ -529,6 +526,7 @@ def pid_drive(distance_inches, max_velocity_percent, timeout=3.0):
         Left_Front.spin(REVERSE)
         RightMotors.spin(FORWARD)
         Right_front.spin(FORWARD)
+        wait(0.05,SECONDS)
 
     # Stop motors when the movement is complete
     RightMotors.stop()
@@ -657,29 +655,51 @@ def onauton_autonomous_0():
 
     stop_initialize.broadcast()
     # AUTO SELECT
-    intake.set_velocity(100, PERCENT)
+    intake.set_velocity(90, PERCENT)
 
     '''BLUE STAKE SIDE'''
-    pid_drive(-31, 100)
+    pid_drive(-35, 100)
     intake.set_velocity(100, PERCENT)
     digital_out_b.set(True)
     pid_turn(55, 100)
     intake.spin(FORWARD)
-    pid_drive(26, 100)
+    wait(0.1, SECONDS)
+    pid_drive(30, 100)
     wait(0.3, SECONDS)
     pid_turn(-40, 100)
+    wait(0.1, SECONDS)
     pid_drive(30, 100)
-    pid_turn(-30, 100)
+    pid_turn(-20, 100)
     digital_out_g.set(True)
-    pid_drive(30, 100)
-    pid_turn(-100, 60)
+    wait(0.1, SECONDS)
+    intake.stop()
+    pid_drive(39, 60)
+    wait(0.1, SECONDS)
+    pid_turn(-160, 100)
     digital_out_g.set(False)
-    pid_turn(100, 70)
-    pid_drive(7, 100)
-    wait(0.3, SECONDS)
-    pid_drive(-15, 100)
-    pid_turn(-90, 100)
+    pid_turn(160, 40)
+    intake.spin(FORWARD)
+    wait(0.1, SECONDS)
+    pid_drive(15, 100)
+    wait(1.3, SECONDS)
+    pid_drive(-20, 100)
+    wait(0.1, SECONDS)
+    pid_turn(180, 70)
+    wait(0.1, SECONDS)
+    pid_drive(30, 100)
+    Lady_Brown.spin_to_position(200, DEGREES)
+    intake.stop()
     pid_drive(40, 100)
+    'LADDER VAR'
+    '''pid_turn(150, 70)
+    wait(0.1, SECONDS)
+    pid_drive(15, 100)
+    digital_out_b.set(False)
+    pid_turn(-20, 70)
+    pid_drive(15, 100)
+    wait(0.1, SECONDS)
+    pid_drive(20, 100)
+    digital_out_g.set(True)'''
 
 
 
@@ -695,63 +715,51 @@ def onauton_autonomous_0():
     digital_out_e.set(True)
     pid_drive(30, 100)'''
 
-    '''pid_drive(12.5, 100)
+
+
+    '''BLUESIDE GOOD'''
+    '''pid_drive(15, 70)
     Lady_Brown.spin_to_position(360, DEGREES)
     wait(0.1, SECONDS)
     Lady_Brown.spin_to_position(0, DEGREES)
-    pid_drive(-49, 100)
-    wait(0.1, SECONDS)
-    digital_out_b.set(True)
-    pid_turn(170, 100)
-    pid_drive(20, 100)
-    pid_drive_curve(-24, 70, 100)
-    intake.spin(FORWARD)
-    pid_drive(10, 100)
-    wait(0.3, SECONDS)
-    pid_drive(10, 100)'''
-    
-
-    '''REDSIDE'''
-    '''pid_drive(12.5, 100)
-    Lady_Brown.spin_to_position(360, DEGREES)
-    wait(0.1, SECONDS)
-    Lady_Brown.spin_to_position(0, DEGREES)
-    pid_drive(-49, 60)
-    wait(0.1, SECONDS)
-    digital_out_b.set(True)
-    pid_turn(150, 100)
-    intake.spin(FORWARD)
-    pid_drive(20, 100)
-    pid_drive(15, 100)
-    wait(0.5, SECONDS)
-    pid_turn(-80, 100)
-    pid_drive(15, 60)
-    wait(0.5, SECONDS)
-    pid_turn(-120, 100)
-    Lady_Brown.spin_to_position(300, DEGREES)
-    pid_drive(37, 100)'''
-
-
-
-    '''BLUE RING SIDE'''
-    '''pid_drive(12.5, 100)
-    Lady_Brown.spin_to_position(360, DEGREES)
-    wait(0.1, SECONDS)
-    Lady_Brown.spin_to_position(0, DEGREES)
-    pid_drive(-49, 60)
+    pid_drive(-50, 60)
     wait(0.1, SECONDS)
     digital_out_b.set(True)
     pid_turn(-150, 100)
+    wait(0.1, SECONDS)
     intake.spin(FORWARD)
-    pid_drive(20, 100)
-    pid_drive(18, 100)
+    pid_drive(38, 100)
     wait(0.5, SECONDS)
-    pid_turn(70, 100)
-    pid_drive(13, 60)
+    pid_turn(80, 100)
+    wait(0.1, SECONDS)
+    pid_drive(19, 100)
     wait(0.5, SECONDS)
-    pid_turn(140, 100)
+    pid_turn(120, 100)
     Lady_Brown.spin_to_position(300, DEGREES)
-    pid_drive(37, 100)'''
+    pid_drive(47, 100)'''
+
+    '''REDSIDE GOOD'''
+    '''pid_drive(15, 70)
+    Lady_Brown.spin_to_position(360, DEGREES)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(0, DEGREES)
+    pid_drive(-50, 60)
+    wait(0.1, SECONDS)
+    digital_out_b.set(True)
+    pid_turn(150, 100)
+    wait(0.1, SECONDS)
+    intake.spin(FORWARD)
+    pid_drive(38, 100)
+    wait(0.5, SECONDS)
+    pid_turn(-80, 100)
+    wait(0.1, SECONDS)
+    pid_drive(19, 100)
+    wait(0.5, SECONDS)
+    pid_turn(-120, 100)
+    Lady_Brown.spin_to_position(300, DEGREES)
+    pid_drive(47, 100)'''
+
+
 
 
 
@@ -906,6 +914,8 @@ def ondriver_drivercontrol_4():
             wait(5, MSEC)
         wait(5, MSEC)
   
+
+
 
 def onevent_controller_1axis2Changed_0():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision

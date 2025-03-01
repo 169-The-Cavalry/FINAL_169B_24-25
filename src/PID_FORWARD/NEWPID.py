@@ -3,12 +3,12 @@ import math
 
 
 # PID Constants for Distance Control
-kP_distance = 1.7
+kP_distance = 2.8
 kI_distance = 0.0
 kD_distance = 1
 timeout = 10
 # PID Constant for Heading Correction
-kP_heading = 0.1
+kP_heading = 0.05
 
 
 
@@ -33,6 +33,7 @@ def pid_drive(distance_inches, max_velocity_percent, timeout=3.0):
     RightMotors.set_position(0, DEGREES)
     Left_Front.set_position(0, DEGREES)
     Right_front.set_position(0, DEGREES)
+    Inertial21.set_rotation(0, DEGREES)
 
     # Capture the starting heading from the IMU
     target_heading = Inertial21.rotation()
@@ -50,10 +51,6 @@ def pid_drive(distance_inches, max_velocity_percent, timeout=3.0):
         # Break if we're within tolerance or timeout has been exceeded
         if abs(error_distance) < 3 or (brain.timer.time(SECONDS) - start_time) > timeout:
             break
-        controller_1.screen.set_cursor(1,1)
-        wait(0.2,SECONDS)
-        controller_1.screen.clear_screen()
-        controller_1.screen.print(error_distance)
 
         # Distance PID calculations
         integral_distance += error_distance
@@ -91,6 +88,7 @@ def pid_drive(distance_inches, max_velocity_percent, timeout=3.0):
         Left_Front.spin(REVERSE)
         RightMotors.spin(FORWARD)
         Right_front.spin(FORWARD)
+        wait(0.05,SECONDS)
 
     # Stop motors when the movement is complete
     RightMotors.stop()
