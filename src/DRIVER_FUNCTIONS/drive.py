@@ -114,7 +114,7 @@ def ondriver_drivercontrol_3():
     previous_button_state2 = False  # Track previous button press
 
     while True:
-        current_button_state2 = controller_1.buttonX.pressing()
+        current_button_state2 = controller_1.buttonY.pressing()
 
         # Detect the moment the button is first pressed
         if current_button_state2 and not previous_button_state2:
@@ -149,23 +149,22 @@ def ondriver_drivercontrol_5():
     """Stops intake when a blue ring is detected."""
     while True:
             # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
-            
-        if  230 > optical_4.hue() > 200 and optical_4.is_near_object():
-            wait(0.08, SECONDS)
-            Intake_Control = False
-            intake.set_velocity(5, PERCENT)
-            wait(1, SECONDS)
-            intake.stop()  # Stop intake immediately
-            wait(0.1, SECONDS)
-            Intake_Control = True
-        '''while RED:
-            # Check if optical sensor detects a red ring
-            if optical_4.color() == Color.RED and optical_4.is_near_object():
-                brain.screen.clear_screen()
-                wait(0.1, SECONDS)
-                brain.screen.print("RED")
+        while BLUE:
+            if  230 > optical_4.hue() > 200:
+                wait(0.13, SECONDS)
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
-                wait(0.1, SECONDS)
+                brain.screen.clear_screen()
+                brain.screen.print("Blue")
+                wait(0.5, SECONDS)
                 Intake_Control = True
-                wait(10, MSEC)  # Small delay to reduce CPU usage'''
+        while RED:
+            # Check if optical sensor detects a red ring
+            if  230 > optical_4.hue() > 200:
+                wait(0.13, SECONDS)
+                Intake_Control = False
+                intake.stop()  # Stop intake immediately
+                brain.screen.clear_screen()
+                brain.screen.print("Red")
+                wait(0.5, SECONDS)
+                Intake_Control = True
