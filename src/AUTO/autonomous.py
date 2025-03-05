@@ -9,8 +9,8 @@ def onauton_autonomous_0():
     stop_initialize.broadcast()
     # AUTO SELECT
     intake.set_velocity(90, PERCENT)
-    BLUE_RIGHT_RING()
-    '''BLUE_LEFT_SAFE()
+    BLUE_RIGHT_RING_ELIMS()
+    '''BLUE_RIGHT_RING() BLUE_LEFT_SAFE()
     BLUE_RIGHT_RING_ELIMS()
     BLUE_RIGHT_RING()
     RED_LEFT_RING()
