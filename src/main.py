@@ -650,8 +650,9 @@ def onauton_autonomous_0():
     stop_initialize.broadcast()
     # AUTO SELECT
     intake.set_velocity(90, PERCENT)
-    BLUE_LEFT_GOAL_RUSH_ELIMS()
-    '''BLUE_RIGHT_RING_ELIMS()
+    BLUE_RIGHT_RING()
+    '''BLUE_LEFT_SAFE()
+    BLUE_RIGHT_RING_ELIMS()
     BLUE_RIGHT_RING()
     RED_LEFT_RING()
     RED_RIGHT_SAFE()
@@ -851,35 +852,37 @@ def BLUE_LEFT_SAFE():
     wait(0.1, SECONDS)
     pid_drive(30, 100)
     pid_turn(-20, 100)
-    digital_out_g.set(True)
     wait(0.1, SECONDS)
+    pid_drive(47, 60)
+    wait(0.5, SECONDS)
+    pid_drive(-20, 60)
+    digital_out_g.set(True)
+    wait(1, SECONDS)
     intake.stop()
-    pid_drive(39, 60)
+    pid_drive(20, 60)
     wait(0.1, SECONDS)
     pid_turn(-160, 100)
     digital_out_g.set(False)
     pid_turn(160, 40)
-    intake.spin(FORWARD)
     wait(0.1, SECONDS)
-    pid_drive(15, 100)
-    wait(1.3, SECONDS)
-    pid_drive(-20, 100)
+    pid_drive(-30, 100)
+    wait(0.1, SECONDS)
+    pid_turn(90, 70)
+    digital_out_b.set(False)
+    wait(0.1, SECONDS)
+    pid_drive(35, 100)
+    pid_turn(180, 100)
+    'LADDER VAR'
+    '''pid_turn(160, 40)
+    wait(0.1, SECONDS)
+    pid_drive(-30, 100)
     wait(0.1, SECONDS)
     pid_turn(180, 70)
     wait(0.1, SECONDS)
     pid_drive(30, 100)
     Lady_Brown.spin_to_position(250, DEGREES)
-    pid_drive(40, 100)
-    'LADDER VAR'
-    '''pid_turn(150, 70)
-    wait(0.1, SECONDS)
-    pid_drive(15, 100)
-    digital_out_b.set(False)
-    pid_turn(-20, 70)
-    pid_drive(15, 100)
-    wait(0.1, SECONDS)
-    pid_drive(20, 100)
-    digital_out_g.set(True)'''
+    pid_drive(40, 100)'''
+
 
 
 
@@ -1035,11 +1038,14 @@ def ondriver_drivercontrol_5():
             # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
         while BLUE:
             if  230 > optical_4.hue() > 200:
-                wait(0.13, SECONDS)
+                wait(0.11, SECONDS)
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
                 brain.screen.clear_screen()
                 brain.screen.print("Blue")
+                intake.spin(REVERSE)
+                wait(0.1, SECONDS)
+                intake.stop()
                 wait(0.5, SECONDS)
                 Intake_Control = True
         while RED:

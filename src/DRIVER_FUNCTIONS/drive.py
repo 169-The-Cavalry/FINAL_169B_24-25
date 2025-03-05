@@ -151,11 +151,14 @@ def ondriver_drivercontrol_5():
             # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
         while BLUE:
             if  230 > optical_4.hue() > 200:
-                wait(0.13, SECONDS)
+                wait(0.11, SECONDS)
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
                 brain.screen.clear_screen()
                 brain.screen.print("Blue")
+                intake.spin(REVERSE)
+                wait(0.1, SECONDS)
+                intake.stop()
                 wait(0.5, SECONDS)
                 Intake_Control = True
         while RED:
