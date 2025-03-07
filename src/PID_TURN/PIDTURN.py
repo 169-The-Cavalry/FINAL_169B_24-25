@@ -99,6 +99,7 @@ def vexcode_auton_function():
     
     auton_task_0 = Thread( onauton_autonomous_0 )
     auton_task_1 = Thread( onauton_autonomous_1 )
+    auton_task_2 = Thread( onauton_autonomous_2 )
     # wait for the driver control period to end
     while( competition.is_autonomous() and competition.is_enabled() ):
         # wait 10 milliseconds before checking again
@@ -106,6 +107,7 @@ def vexcode_auton_function():
     # Stop the autonomous control tasks
     auton_task_0.stop()
     auton_task_1.stop()
+    auton_task_2.stop()
 def vexcode_driver_function():
     # Start the driver control tasks
     driver_control_task_0 = Thread( ondriver_drivercontrol_0 )

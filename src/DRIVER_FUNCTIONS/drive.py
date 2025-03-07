@@ -17,6 +17,15 @@ def ondriver_drivercontrol_4():
         wait(5, MSEC)
   
 
+def ondriver_drivercontrol_8():
+    global turn_heading_velocity_momentum, Forward_PID_Distance_Max_Speed, message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision, IntakeF, intake
+    while True:
+        while intake.efficiency(PERCENT) == 0 and Intake_Control == True:
+            Intake_Control = False
+            intake.spin(REVERSE)
+            wait(0.2, SECONDS)
+            intake.spin(FORWARD)
+            Intake_Control = True
 
 
 def onevent_controller_1axis2Changed_0():
@@ -143,31 +152,62 @@ def ondriver_drivercontrol_0():
         previous_button_state3 = current_button_state3  # Update state tracking
         wait(5, MSEC)  # Prevent CPU overuse
         
+optical_value = optical_4.hue()
 def ondriver_drivercontrol_5():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
     global intake, optical_4, Intake_Control, BLUE, RED
     """Stops intake when a blue ring is detected."""
     while True:
             # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
-        while BLUE:
-            if  230 > optical_4.hue() > 200:
-                wait(0.11, SECONDS)
+        
+        '''while BLUE:
+            if  240 > optical_4.hue() > 190:
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
-                brain.screen.clear_screen()
-                brain.screen.print("Blue")
+                wait(0.3, SECONDS)
                 intake.spin(REVERSE)
-                wait(0.1, SECONDS)
+                wait(0.3, SECONDS)
+                intake.stop()
+                wait(0.5, SECONDS)
+                Intake_Control = True'''
+        while RED:
+            # Check if optical sensor detects a red ring
+            if    30 > optical_4.hue() > 0:
+                Intake_Control = False
+                intake.stop()  # Stop intake immediately
+                wait(0.3, SECONDS)
+                intake.spin(REVERSE)
+                wait(0.3, SECONDS)
+                intake.stop()
+                wait(0.5, SECONDS)
+                Intake_Control = True
+
+
+def onauton_autonomous_2():
+    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
+    global intake, optical_4, Intake_Control, BLUE, RED
+    """Stops intake when a blue ring is detected."""
+    while True:
+            # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
+        
+        while BLUE:
+            if  240 > optical_4.hue() > 190:
+                Intake_Control = False
+                intake.stop()  # Stop intake immediately
+                wait(0.3, SECONDS)
+                intake.spin(REVERSE)
+                wait(0.3, SECONDS)
                 intake.stop()
                 wait(0.5, SECONDS)
                 Intake_Control = True
         while RED:
             # Check if optical sensor detects a red ring
-            if  230 > optical_4.hue() > 200:
-                wait(0.13, SECONDS)
+            if   30 > optical_4.hue() > 0:
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
-                brain.screen.clear_screen()
-                brain.screen.print("Red")
+                wait(0.3, SECONDS)
+                intake.spin(REVERSE)
+                wait(0.3, SECONDS)
+                intake.stop()
                 wait(0.5, SECONDS)
                 Intake_Control = True

@@ -1,5 +1,4 @@
 
-
 def ondriver_drivercontrol_6():
     global rotation_15, Lady_Brown, controller_1
 
@@ -39,17 +38,19 @@ def ondriver_drivercontrol_6():
             Lady_Brown.set_stopping(COAST)
             Lady_Brown.spin(REVERSE)
 
-            while rotation_15.position(DEGREES) < 295:
-                Lady_Brown.set_stopping(COAST)
-                Lady_Brown.stop()
-                rotation_15.set_position(300, DEGREES)
-        
-        elif controller_1.buttonRight.pressing():
+            start_time = time.time()  # Record start time
+            while rotation_15.position(DEGREES) < 300:
+                if time.time() - start_time > 2:  # If movement takes longer than 2 sec
+                    print("⚠️ SAFEGUARD TRIGGERED: Movement timeout!")
+                    break
+                wait(5, MSEC)
+
             Lady_Brown.set_stopping(COAST)
             Lady_Brown.stop()
             rotation_15.set_position(300, DEGREES)
 
         wait(5, MSEC)  # Reduce CPU usage'''
+
 
 
 '''def ondriver_drivercontrol_4():

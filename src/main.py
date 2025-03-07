@@ -88,7 +88,7 @@ Lady_Brown_motor_b = Motor(Ports.PORT10, GearSetting.RATIO_6_1, False)
 Lady_Brown = MotorGroup(Lady_Brown_motor_a, Lady_Brown_motor_b)
 Inertial21 = Inertial(Ports.PORT5)
 digital_out_g = DigitalOut(brain.three_wire_port.g)
-optical_4 = Optical(Ports.PORT14)
+optical_4 = Optical(Ports.PORT4)
 intake = Motor(Ports.PORT8, GearSetting.RATIO_6_1, True)
 digital_out_e = DigitalOut(brain.three_wire_port.e)
 gps_3 = Gps(Ports.PORT3, 0.00, 5.00, MM, -90)
@@ -147,8 +147,8 @@ LB = False
 DOon2 = False
 DOon3 = False
 Blue = False
-RED = False
-BLUE = True
+RED = True
+BLUE = False
 Intake_Control = False
 Intake_running = False
 myVariable = 0
@@ -198,7 +198,6 @@ Turn_Angle = 0
 
 
 
-
 def ondriver_drivercontrol_6():
     global rotation_15, Lady_Brown, controller_1
 
@@ -238,17 +237,19 @@ def ondriver_drivercontrol_6():
             Lady_Brown.set_stopping(COAST)
             Lady_Brown.spin(REVERSE)
 
-            while rotation_15.position(DEGREES) < 295:
-                Lady_Brown.set_stopping(COAST)
-                Lady_Brown.stop()
-                rotation_15.set_position(300, DEGREES)
-        
-        elif controller_1.buttonRight.pressing():
+            start_time = time.time()  # Record start time
+            while rotation_15.position(DEGREES) < 300:
+                if time.time() - start_time > 2:  # If movement takes longer than 2 sec
+                    print("⚠️ SAFEGUARD TRIGGERED: Movement timeout!")
+                    break
+                wait(5, MSEC)
+
             Lady_Brown.set_stopping(COAST)
             Lady_Brown.stop()
             rotation_15.set_position(300, DEGREES)
 
         wait(5, MSEC)  # Reduce CPU usage'''
+
 
 
 '''def ondriver_drivercontrol_4():
@@ -651,7 +652,7 @@ def onauton_autonomous_0():
     # AUTO SELECT
     intake.set_velocity(90, PERCENT)
     BLUE_RIGHT_RING_ELIMS()
-    '''BLUE_RIGHT_RING() BLUE_LEFT_SAFE()
+    '''BLUE_RIGHT_RING() BLUE_LEFT_SAFE() BLUE_LEFT_SAFE_ELIMS() RED_LEFT_RING_ELIMS()
     BLUE_RIGHT_RING_ELIMS()
     BLUE_RIGHT_RING()
     RED_LEFT_RING()
@@ -661,20 +662,47 @@ def onauton_autonomous_0():
 
 
 
-
-
-
+import time
 
 def onauton_autonomous_1():
     global turn_heading_velocity_momentum, Forward_PID_Distance_Max_Speed, message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision, IntakeF, intake
-    while intake.is_spinning:
-        if intake.velocity(PERCENT) < 10 and intake.efficiency(PERCENT) < 30 and IntakeF == True:
+    while True:
+        controller_1.screen.clear_screen()
+        wait(0.1, SECONDS)
+        controller_1.screen.set_cursor(1, 1)
+        controller_1.screen.print(intake.efficiency(PERCENT))
+        while intake.efficiency(PERCENT) == 0 and IntakeF == True:
             controller_1.screen.clear_screen()
+            controller_1.screen.set_cursor(1, 2)
+            controller_1.screen.print("intake:(")
+            intake.spin(REVERSE)
+            wait(0.2, SECONDS)
+            intake.spin(FORWARD)
+    
+        '''if intake.efficiency(PERCENT) < 10 and IntakeF == True:
+            startT = brain.timer.time(SECONDS)
+        if intake.efficiency(PERCENT) < 10 and IntakeF == True and (brain.timer.time(SECONDS) - startT) <= 2:
+            wait(2, SECONDS)
+        if intake.efficiency(PERCENT) < 10 and IntakeF == True and (brain.timer.time(SECONDS) - startT) <= 2:
+            intake.spin(REVERSE)
+            wait(0.3, SECONDS)
+            intake.spin(FORWARD)'''
+    
+
+'''def onauton_autonomous_1():
+    global turn_heading_velocity_momentum, Forward_PID_Distance_Max_Speed, message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision, IntakeF, intake
+    while True:
+        if intake.efficiency(PERCENT) < 10 and IntakeF == True:
+            startT = brain.timer.time(SECONDS)
+        while IntakeF == True and intake.efficiency(PERCENT) < 10 and (brain.timer.time(SECONDS) - startT) >= 2:
+            controller_1.screen.set_cursor(1, 1)
+            controller_1.screen.clear_screen()
+            wait(0.1, SECONDS)
             controller_1.screen.print(intake.efficiency(PERCENT))
             intake.spin(REVERSE)
             wait(0.3, SECONDS)
             intake.spin(FORWARD)
-            wait(1, SECONDS)
+            wait(1, SECONDS)'''
 
 
 
@@ -703,6 +731,8 @@ def no_auto():
 
     
 def BLUE_LEFT_GOAL_RUSH_ELIMS():
+    global IntakeF, RED
+    RED = True
     pid_drive(57, 100)
     wait(0.1, SECONDS)
     digital_out_g.set(True)
@@ -711,6 +741,7 @@ def BLUE_LEFT_GOAL_RUSH_ELIMS():
 
 
 def RED_LEFT_RING():
+    global IntakeF, BLUE
     pid_drive(15, 70)
     Lady_Brown.spin_to_position(360, DEGREES)
     wait(0.1, SECONDS)
@@ -721,23 +752,34 @@ def RED_LEFT_RING():
     pid_turn(150, 100)
     wait(0.1, SECONDS)
     intake.spin(FORWARD)
-    pid_drive(38, 100)
-    wait(0.5, SECONDS)
-    pid_turn(-80, 100)
+    pid_drive(39, 100)
+    wait(1, SECONDS)
+    pid_drive(-20, 100)
+    pid_turn(-40, 100)
     wait(0.1, SECONDS)
-    pid_drive(19, 100)
+    pid_drive(21, 100)
     wait(0.5, SECONDS)
-    pid_turn(-120, 100)
-    Lady_Brown.spin_to_position(300, DEGREES)
+    pid_turn(70, 100)
+    wait(0.1, SECONDS)
+    pid_drive(24, 100)
+    wait(0.5, SECONDS)
+    pid_drive(-20, 100)
+    wait(0.1, SECONDS)
+    pid_turn(120, 100)
+    wait(0.1, SECONDS)
+    Lady_Brown.spin_to_position(350, DEGREES)
     pid_drive(47, 100)
 
-    
-def BLUE_RIGHT_RING_ELIMS():
+def RED_LEFT_RING_ELIMS():
+    global IntakeF, BLUE
+    BLUE = True
     digital_out_g.set(True)
     digital_out_e.set(True)
+    IntakeF = True
     intake.spin(FORWARD)
     pid_drive(62, 100)
     wait(0.5, SECONDS)
+    IntakeF = False
     intake.stop()
     pid_drive(-20, 100)
     wait(0.1, SECONDS)
@@ -756,23 +798,59 @@ def BLUE_RIGHT_RING_ELIMS():
     pid_drive(19, 100)
     wait(0.5, SECONDS)
     pid_drive(-24, 100)
-    pid_turn(160, 100)
-    pid_drive(30, 100)
-    wait(0.5, SECONDS)
-    pid_turn(25, 100)
-    wait(0.1, SECONDS)
-    pid_drive(7, 100)
+    pid_turn(120, 100)
+    pid_drive(24, 100)
+
+
+
+def BLUE_RIGHT_RING_ELIMS():
+    global IntakeF, RED
+    RED = True
+    digital_out_g.set(True)
     digital_out_e.set(True)
+    IntakeF = True
+    intake.spin(FORWARD)
+    pid_drive(62, 100)
+    wait(0.5, SECONDS)
+    IntakeF = False
+    intake.stop()
+    pid_drive(-20, 100)
     wait(0.1, SECONDS)
-    pid_turn(50, 100)
+    pid_turn(65, 40)
     wait(0.1, SECONDS)
+    digital_out_g.set(False)
     digital_out_e.set(False)
-    pid_turn(-10, 100)
+    pid_drive(-27, 40)
+    wait(0.5, SECONDS)
+    digital_out_b.set(True)
+    IntakeF = True
+    intake.spin(FORWARD)
+    pid_turn(5, 100)
+    pid_drive(33, 100)
+    wait(0.5, SECONDS)
+    pid_turn(-55, 100)
     wait(0.1, SECONDS)
-    pid_drive(13, 100)
+    pid_drive(22, 100)
+    wait(0.5, SECONDS)
+    pid_drive(-24, 100)
+    wait(0.1, SECONDS)
+    pid_turn(140, 100)
+    wait(0.1, SECONDS)
+    pid_drive(40, 100)
+    wait(0.1, SECONDS)
+    pid_turn(-30, 100)
+    wait(0.1, SECONDS)
+    pid_drive(55, 100)
+    pid_drive(15, 100)
+    wait(0.5, SECONDS)
+    pid_drive(-10, 100)
+
+
     
 
 def BLUE_RIGHT_RING():
+    global IntakeF, RED
+    RED = True
     pid_drive(15, 70)
     Lady_Brown.spin_to_position(360, DEGREES)
     wait(0.1, SECONDS)
@@ -783,16 +861,16 @@ def BLUE_RIGHT_RING():
     pid_turn(-150, 100)
     wait(0.1, SECONDS)
     intake.spin(FORWARD)
-    pid_drive(38, 100)
-    wait(0.5, SECONDS)
+    pid_drive(39, 100)
+    wait(1, SECONDS)
     pid_drive(-20, 100)
     pid_turn(40, 100)
     wait(0.1, SECONDS)
-    pid_drive(19, 100)
+    pid_drive(21, 100)
     wait(0.5, SECONDS)
-    pid_turn(-40, 100)
+    pid_turn(-70, 100)
     wait(0.1, SECONDS)
-    pid_drive(18, 100)
+    pid_drive(24, 100)
     wait(0.5, SECONDS)
     pid_drive(-20, 100)
     wait(0.1, SECONDS)
@@ -804,10 +882,12 @@ def BLUE_RIGHT_RING():
     
     
 def RED_RIGHT_SAFE():
+    global IntakeF, BLUE
+    BLUE = True
     pid_drive(-35, 100)
     intake.set_velocity(100, PERCENT)
     digital_out_b.set(True)
-    pid_turn(55, 100)
+    pid_turn(45, 100)
     intake.spin(FORWARD)
     wait(0.1, SECONDS)
     pid_drive(30, 100)
@@ -847,12 +927,15 @@ def RED_RIGHT_SAFE():
     digital_out_g.set(True)'''
 
     
-def BLUE_LEFT_SAFE():
+def BLUE_LEFT_SAFE_ELIMS():
+    global IntakeF, RED
+    RED = True
     pid_drive(-35, 100)
     intake.set_velocity(100, PERCENT)
     digital_out_b.set(True)
     pid_turn(55, 100)
     intake.spin(FORWARD)
+    IntakeF = True
     wait(0.1, SECONDS)
     pid_drive(30, 100)
     wait(0.3, SECONDS)
@@ -861,35 +944,45 @@ def BLUE_LEFT_SAFE():
     pid_drive(30, 100)
     pid_turn(-20, 100)
     wait(0.1, SECONDS)
-    pid_drive(47, 60)
+    pid_drive(47, 50)
     wait(0.5, SECONDS)
-    pid_drive(-20, 60)
-    digital_out_g.set(True)
-    wait(1, SECONDS)
-    intake.stop()
-    pid_drive(20, 60)
-    wait(0.1, SECONDS)
-    pid_turn(-160, 100)
-    digital_out_g.set(False)
-    pid_turn(160, 40)
-    wait(0.1, SECONDS)
-    pid_drive(-30, 100)
-    wait(0.1, SECONDS)
-    pid_turn(90, 70)
+    pid_drive(-9, 30)
+    wait(0.5, SECONDS)
+    pid_drive(11, 100)
+    wait(0.8, SECONDS)
+    pid_drive(-18, 100)
+    pid_turn(60, 100)
     digital_out_b.set(False)
-    wait(0.1, SECONDS)
-    pid_drive(35, 100)
-    pid_turn(180, 100)
-    'LADDER VAR'
-    '''pid_turn(160, 40)
-    wait(0.1, SECONDS)
-    pid_drive(-30, 100)
-    wait(0.1, SECONDS)
-    pid_turn(180, 70)
+    pid_turn(-40, 100)
+    pid_drive(-25, 100)
+
+
+
+def BLUE_LEFT_SAFE():
+    global IntakeF, RED
+    RED = True
+    pid_drive(-35, 100)
+    intake.set_velocity(100, PERCENT)
+    digital_out_b.set(True)
+    pid_turn(55, 100)
+    intake.spin(FORWARD)
+    IntakeF = True
     wait(0.1, SECONDS)
     pid_drive(30, 100)
+    wait(0.3, SECONDS)
+    pid_turn(-40, 100)
+    wait(0.1, SECONDS)
+    pid_drive(30, 100)
+    pid_turn(-20, 100)
+    wait(0.1, SECONDS)
+    pid_drive(47, 50)
+    wait(0.5, SECONDS)
+    pid_drive(-18, 100)
+    pid_turn(200, 100)
     Lady_Brown.spin_to_position(250, DEGREES)
-    pid_drive(40, 100)'''
+    pid_drive(70, 100)
+
+
 
 
 
@@ -1038,32 +1131,63 @@ def ondriver_drivercontrol_0():
         previous_button_state3 = current_button_state3  # Update state tracking
         wait(5, MSEC)  # Prevent CPU overuse
         
+optical_value = optical_4.hue()
 def ondriver_drivercontrol_5():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
     global intake, optical_4, Intake_Control, BLUE, RED
     """Stops intake when a blue ring is detected."""
     while True:
             # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
-        while BLUE:
-            if  230 > optical_4.hue() > 200:
-                wait(0.11, SECONDS)
+        
+        '''while BLUE:
+            if  240 > optical_4.hue() > 190:
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
-                brain.screen.clear_screen()
-                brain.screen.print("Blue")
+                wait(0.3, SECONDS)
                 intake.spin(REVERSE)
-                wait(0.1, SECONDS)
+                wait(0.3, SECONDS)
+                intake.stop()
+                wait(0.5, SECONDS)
+                Intake_Control = True'''
+        while RED:
+            # Check if optical sensor detects a red ring
+            if    30 > optical_4.hue() > 0:
+                Intake_Control = False
+                intake.stop()  # Stop intake immediately
+                wait(0.3, SECONDS)
+                intake.spin(REVERSE)
+                wait(0.3, SECONDS)
+                intake.stop()
+                wait(0.5, SECONDS)
+                Intake_Control = True
+
+
+def onauton_autonomous_2():
+    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
+    global intake, optical_4, Intake_Control, BLUE, RED
+    """Stops intake when a blue ring is detected."""
+    while True:
+            # Check if optical sensor detects a blue ring (DEFAULTS TO BLUE)
+        
+        while BLUE:
+            if  240 > optical_4.hue() > 190:
+                Intake_Control = False
+                intake.stop()  # Stop intake immediately
+                wait(0.3, SECONDS)
+                intake.spin(REVERSE)
+                wait(0.3, SECONDS)
                 intake.stop()
                 wait(0.5, SECONDS)
                 Intake_Control = True
         while RED:
             # Check if optical sensor detects a red ring
-            if  230 > optical_4.hue() > 200:
-                wait(0.13, SECONDS)
+            if   30 > optical_4.hue() > 0:
                 Intake_Control = False
                 intake.stop()  # Stop intake immediately
-                brain.screen.clear_screen()
-                brain.screen.print("Red")
+                wait(0.3, SECONDS)
+                intake.spin(REVERSE)
+                wait(0.3, SECONDS)
+                intake.stop()
                 wait(0.5, SECONDS)
                 Intake_Control = True
 '''def BLUE_EJECT():
@@ -1192,6 +1316,7 @@ def vexcode_auton_function():
     
     auton_task_0 = Thread( onauton_autonomous_0 )
     auton_task_1 = Thread( onauton_autonomous_1 )
+    auton_task_2 = Thread( onauton_autonomous_2 )
     # wait for the driver control period to end
     while( competition.is_autonomous() and competition.is_enabled() ):
         # wait 10 milliseconds before checking again
@@ -1199,6 +1324,7 @@ def vexcode_auton_function():
     # Stop the autonomous control tasks
     auton_task_0.stop()
     auton_task_1.stop()
+    auton_task_2.stop()
 def vexcode_driver_function():
     # Start the driver control tasks
     driver_control_task_0 = Thread( ondriver_drivercontrol_0 )
